@@ -2,3 +2,15 @@
   background-color: rgb(247, 237, 225);
   border: 1px solid gray;
 }
+
+.NavLink {
+  padding: 5px;
+}
+
+.Active i {
+  color: rgb(67, 136, 136);
+}
+
+a:hover {
+  color: black;
+}
