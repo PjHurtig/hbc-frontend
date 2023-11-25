@@ -70,7 +70,10 @@ function GearListCreateForm() {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("category", listType);
-    formData.append("image", imageInput.current.files[0]);
+
+    if (imageInput.current.files[0]) {
+      formData.append("image", imageInput.current.files[0]);
+    }
 
     try {
       const { data } = await axiosReq.post("/gearlists/", formData);
