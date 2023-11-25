@@ -81,6 +81,12 @@ function App() {
             render={() => <GearListCreateForm />} 
           />
 
+          <Route 
+            exact 
+            path="/gearlists/:id/edit" 
+            render={() => <GearListCreateForm />} 
+          />
+
           <Route render={() => <NotFound />} />
         </Switch>
       </Container>
