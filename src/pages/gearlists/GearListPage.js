@@ -16,6 +16,7 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
+import { Button, Modal } from "react-bootstrap";
 
 function GearListPage() {
   const { id } = useParams();
@@ -24,6 +25,12 @@ function GearListPage() {
   const currentUser = useCurrentUser();
   const profile_image = currentUser?.profile_image;
   const [gearItems, setGearItems] = useState({ results: [] });
+
+  // add gear item modal usestates
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     const handleMount = async () => {
@@ -55,13 +62,32 @@ function GearListPage() {
         <GearList {...gearList.results[0]} setGearLists={setGearList} gearListPage />
         <Container className={appStyles.Content}>
         {currentUser && gearList.results[0]?.owner === currentUser.username ? (
-          <GearItemCreateForm
-            profile_id={currentUser.profile_id}
-            profileImage={profile_image}
-            gearList={id}
-            setGearList={setGearList}
-            setGearItems={setGearItems}
-          />
+          <>
+          <Button variant="primary" onClick={handleShow}>
+            Add Gear
+          </Button>
+
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Add gear items</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <GearItemCreateForm
+                profile_id={currentUser.profile_id}
+                profileImage={profile_image}
+                gearList={id}
+                setGearList={setGearList}
+                setGearItems={setGearItems}
+              />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          </>
           ) : gearItems.results.length ? (
             "Gear Items"
           ) : null}
