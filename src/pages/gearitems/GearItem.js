@@ -40,9 +40,11 @@ const GearItem = (props) => {
       }));
   
       setGearItems((prevGearItems) => ({
-        results: prevGearItems.results.filter((gearitem) => gearitem.gearlist !== id),
+        results: prevGearItems.results.filter((gearitem) => gearitem.id !== id),
       }));
-    } catch (err) {}
+    } catch (err) {
+
+    }
   };
   
   return (
