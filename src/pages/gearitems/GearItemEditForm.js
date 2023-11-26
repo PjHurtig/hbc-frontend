@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert } from "react-bootstrap";
+import { Alert, Card } from "react-bootstrap";
 
 import Form from "react-bootstrap/Form";
 import { axiosRes } from "../../api/axiosDefaults";
@@ -7,13 +7,22 @@ import { axiosRes } from "../../api/axiosDefaults";
 import styles from "../../styles/GearItemCreateEditForm.module.css";
 
 function GearItemEditForm(props) {
-  const { id, name, about, setShowEditForm, setGearItems } = props;
+  const { id, name, about, setShowEditForm, setGearItems, image } = props;
 
   const [errors, setErrors] = useState({});
   
   const [formAbout, setFormAbout] = useState(about);
   const [formName, setFormName] = useState(name);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(image);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
     const handleNameChange = (event) => {
     setFormName(event.target.value);
@@ -23,48 +32,46 @@ function GearItemEditForm(props) {
     setFormAbout(event.target.value);
   };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
+    const formData = new FormData();
+    formData.append("about", formAbout.trim());
+    formData.append("name", formName.trim());
+  
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
+  
     try {
-      const formData = new FormData();
-      formData.append("about", formAbout.trim());
-      formData.append("name", formName.trim());
-
-      if (selectedImage) {
-        formData.append("image", selectedImage);
-      }
-
-      await axiosRes.put(`/gearitems/${id}/`, formData, {
+      const { data } = await axiosRes.put(`/gearitems/${id}/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
+  
       setGearItems((prevGearItems) => ({
         ...prevGearItems,
         results: prevGearItems.results.map((gearItem) => {
-          return gearItem.id === id
-            ? {
-                ...gearItem,
-                about: formAbout.trim(),
-                name: formName.trim(),
-                updated_at: "now",
-              }
-            : gearItem;
+          if (gearItem.id === id) {
+            return {
+              ...gearItem,
+              about: data.about,
+              name: data.name,
+              image: data.image, 
+              updated_at: data.updated_at,
+            };
+          }
+          return gearItem;
         }),
       }));
       setShowEditForm(false);
     } catch (err) {
-      // console.log(err);
-        if (err.response?.status !== 401) {
-          setErrors(err.response?.data);
-        }
+      console.log(err);
+      if (err.response?.status !== 401) {
+        setErrors(err.response?.data);
       }
+    }
   };
 
   return (
@@ -106,17 +113,27 @@ function GearItemEditForm(props) {
           </Alert>
         ))}
       <Form.Group>
+        <Form.Label htmlFor="image-upload" className="btn btn-primary">
+          Change Image
+        </Form.Label>
         <Form.File
+          id="image-upload"
           name="image"
           onChange={handleImageChange}
           accept="image/*"
+          style={{ display: 'none' }}
         />
+        {imagePreview && (
+          <Card.Img 
+            variant="top" 
+            src={imagePreview} 
+            className={styles.Img} 
+          />
+        )}
       </Form.Group>
       {errors?.image?.map((message, idx) => (
-          <Alert variant="warning" key={idx}>
-            {message}
-          </Alert>
-        ))}
+        <Alert variant="warning" key={idx}>{message}</Alert>
+      ))}
 
       <div className="text-right">
         <button
