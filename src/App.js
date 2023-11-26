@@ -16,6 +16,7 @@ import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import NotFound from "./components/NotFound";
 import GearListCreateForm from "./pages/gearlists/GearListCreateForm";
+import GearListPage from "./pages/gearlists/GearListPage";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -79,6 +80,12 @@ function App() {
             exact 
             path="/gearlists/create" 
             render={() => <GearListCreateForm />} 
+          />
+
+          <Route 
+            exact 
+            path="/gearlists/:id" 
+            render={() => <GearListPage />} 
           />
 
           <Route 
