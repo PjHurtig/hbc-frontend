@@ -60,12 +60,7 @@ const GearItem = (props) => {
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <Card.Body className={styles.Body}>
-              <Card.Img 
-              variant="top" 
-              src={image} 
-              className={styles.Img}
-              />
-
+              
                 {showEditForm ? (
                   <GearItemEditForm
                     id={id}
@@ -78,9 +73,17 @@ const GearItem = (props) => {
                     image={image}
                   />
                 ) : (
-                  <Card.Text>
-                    {about}
-                  </Card.Text>
+                  <>
+                    <Card.Text>
+                      {about}
+                    </Card.Text>
+                    
+                    <Card.Img 
+                    variant="top" 
+                    src={image} 
+                    className={styles.Img}
+                    />
+                  </>
                 )}
               
 
