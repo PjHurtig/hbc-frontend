@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion, Button, Card, Modal } from "react-bootstrap";
 
 import { MoreDropdown } from "../../components/MoreDropdown";
 import GearItemEditForm from "./GearItemEditForm";
@@ -22,7 +22,7 @@ const GearItem = (props) => {
     setGearItems,
   } = props;
 
-
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
@@ -47,8 +47,28 @@ const GearItem = (props) => {
     }
   };
   
+  const openConfirmDelete = () => setShowConfirmDelete(true);
+  const closeConfirmDelete = () => setShowConfirmDelete(false);
+
   return (
     <>
+      <Modal show={showConfirmDelete} onHide={closeConfirmDelete}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Deletion</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete this gear item?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeConfirmDelete}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={() => { handleDelete(); closeConfirmDelete(); }}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
       <Accordion defaultActiveKey="1">
         <Card>
           <Accordion.Toggle 
@@ -92,7 +112,7 @@ const GearItem = (props) => {
               {is_owner && !showEditForm && (
                 <MoreDropdown
                   handleEdit={() => setShowEditForm(true)}
-                  handleDelete={handleDelete}
+                  handleDelete={openConfirmDelete}
                 />
               )}
 
