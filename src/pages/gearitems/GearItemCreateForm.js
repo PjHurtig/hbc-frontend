@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import Form from "react-bootstrap/Form";
 import Upload from "../../assets/upload.png";
@@ -13,9 +13,10 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
 function GearItemCreateForm(props) {
-    useRedirect('loggedOut')
+  useRedirect('loggedOut')
   const [errors, setErrors] = useState({});
   const { gearList, setGearList, setGearItems } = props;
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [formData, setFormData] = useState({
     gearlist: "",
@@ -54,6 +55,19 @@ function GearItemCreateForm(props) {
     }
   };
 
+  const timeoutId = useRef();
+  
+  const clearErrors = () => {
+    setErrors({});
+  };
+
+  useEffect(() => {
+    const currentTimeoutId = timeoutId.current;
+    return () => {
+      clearTimeout(currentTimeoutId);
+    };
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -82,15 +96,18 @@ function GearItemCreateForm(props) {
           },
         ],
       }));
+      setSuccessMessage("Gear item successfully created!");
+      setTimeout(() => setSuccessMessage(""), 3000);
       setFormData({
         name: "",
         about: "",
         image: "",
       });
     } catch (err) {
-        // console.log(err);
+        console.log(err);
         if (err.response?.status !== 401) {
           setErrors(err.response?.data);
+          timeoutId.current = setTimeout(clearErrors, 3000);
         }
       }
   };
@@ -100,10 +117,15 @@ function GearItemCreateForm(props) {
       className={styles.FormHead}
       encType="multipart/form-data"
     >
-      <h5>Add Gear Item:</h5>
+      {successMessage && (
+        <Alert variant="success">
+          {successMessage}
+        </Alert>
+      )}
+
       <Form.Group>
           <Form.Control 
-          placeholder="Name..."
+          placeholder="Item name..."
           name="name"
           value={name}
           onChange={handleInputChange} 
@@ -118,7 +140,7 @@ function GearItemCreateForm(props) {
       <Form.Group>
           <Form.Label></Form.Label>
           <Form.Control 
-          placeholder="About..."
+          placeholder="About the item..."
           name="about"
           value={about}
           onChange={handleInputChange}
@@ -175,7 +197,6 @@ function GearItemCreateForm(props) {
 
         <button
           className={`${styles.Button} btn d-block ml-auto`}
-          disabled={!name.trim() || !about.trim()}
           type="submit"
         >
           Add
