@@ -25,7 +25,7 @@ function GearListEditForm() {
     image: "",
     category: "",
   });
-  const { title, description, image, category } = gearListData;
+  const { title, description, image } = gearListData;
 
 
   const imageInput = useRef(null);
@@ -50,7 +50,7 @@ function GearListEditForm() {
         const { title, description, image, category, is_owner } = data;
 
         is_owner ? setGearListData({ title, description, image }) : history.push("/");
-        setListType(category);
+        setListType(category); 
       } catch (err) {
         console.log(err);
       }
@@ -82,7 +82,7 @@ function GearListEditForm() {
 
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("category", category);
+    formData.append("category", listType);
 
     if (imageInput?.current?.files[0]) {
       formData.append("image", imageInput.current.files[0]);
@@ -92,8 +92,6 @@ function GearListEditForm() {
       await axiosReq.put(`/gearlists/${id}/`, formData);
       history.push(`/gearlists/${id}`);
     } catch (err) {
-
-      console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }

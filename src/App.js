@@ -17,6 +17,7 @@ import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import NotFound from "./components/NotFound";
 import GearListCreateForm from "./pages/gearlists/GearListCreateForm";
 import GearListPage from "./pages/gearlists/GearListPage";
+import GearListEditForm from "./pages/gearlists/GearListEditForm";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -91,7 +92,7 @@ function App() {
           <Route 
             exact 
             path="/gearlists/:id/edit" 
-            render={() => <GearListCreateForm />} 
+            render={() => <GearListEditForm />} 
           />
 
           <Route render={() => <NotFound />} />
