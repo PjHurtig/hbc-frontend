@@ -75,8 +75,11 @@ function EventCreateForm() {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("category", listType);
-    formData.append("image", imageInput.current.files[0]);
     formData.append("start_time", startDate.toISOString());
+
+    if (imageInput.current.files[0]) {
+      formData.append("image", imageInput.current.files[0]);
+    }
     
 
     try {
