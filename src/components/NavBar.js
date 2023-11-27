@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import logo from "../assets/logo.png";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
@@ -30,21 +30,41 @@ const NavBar = () => {
 
   const addPostIcon = (
     <>
-      <NavLink
-        className={styles.NavLink}
-        activeClassName={styles.Active}
-        to="/posts/create"
-      >
-        <i className="far fa-plus-square"></i>Add post
-      </NavLink>
 
-      <NavLink
-        className={styles.NavLink}
-        activeClassName={styles.Active}
-        to="/gearlists/create"
-        >
-        <i className="far fa-plus-square"></i>Add gearlist
-      </NavLink>
+      <Dropdown>
+        <Dropdown.Toggle variant="none" id="dropdown-basic">
+        <i className="far fa-plus-square"></i>
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+
+          <NavLink
+            className={styles.NavLink}
+            activeClassName={styles.Active}
+            to="/posts/create"
+          >
+            <i className="far fa-plus-square"></i>Add post
+          </NavLink>
+
+          <NavLink
+            className={styles.NavLink}
+            activeClassName={styles.Active}
+            to="/gearlists/create"
+          >
+            <i className="far fa-plus-square"></i>Add Gearlist
+          </NavLink>
+
+          <NavLink
+            className={styles.NavLink}
+            activeClassName={styles.Active}
+            to="/events/create"
+          >
+            <i className="far fa-plus-square"></i>Add event
+          </NavLink>
+        </Dropdown.Menu>
+      </Dropdown>
+
+
     </>
   );
   const loggedInIcons = (
