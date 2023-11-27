@@ -18,6 +18,9 @@ import NotFound from "./components/NotFound";
 import GearListCreateForm from "./pages/gearlists/GearListCreateForm";
 import GearListPage from "./pages/gearlists/GearListPage";
 import GearListEditForm from "./pages/gearlists/GearListEditForm";
+import EventCreateForm from "./pages/events/EventCreateForm";
+import EventPage from "./pages/events/EventPage";
+import EventEditForm from "./pages/events/EventEditForm";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -28,7 +31,7 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Switch>
-          
+
           <Route
             exact
             path="/"
@@ -129,6 +132,24 @@ function App() {
             exact 
             path="/gearlists/:id/edit" 
             render={() => <GearListEditForm />} 
+          />
+
+          <Route 
+            exact 
+            path="/events/create" 
+            render={() => <EventCreateForm />} 
+          />
+          
+          <Route 
+            exact 
+            path="/events/:id" 
+            render={() => <EventPage />} 
+          />
+
+          <Route 
+            exact 
+            path="/events/:id/edit" 
+            render={() => <EventEditForm />} 
           />
 
           <Route render={() => <NotFound />} />
