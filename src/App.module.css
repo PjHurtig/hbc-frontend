@@ -62,6 +62,17 @@ i:hover {
   color: #1f4636;
 }
 
+.header {
+  background-color: #23385b;
+  justify-content: center;
+  display: flex;
+  font-size: x-large;
+  border-radius: 5px;
+  text-transform: capitalize;
+  font-weight: 400;
+  color: #f7ede1;
+  padding: 20px;
+}
 
 figure {
   text-align: center;
