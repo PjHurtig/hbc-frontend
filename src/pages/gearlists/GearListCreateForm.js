@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -7,38 +6,32 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import Image from "react-bootstrap/Image";
-
 import Asset from "../../components/Asset";
-
 import Upload from "../../assets/upload.png";
-
 import styles from "../../styles/PostCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-
 import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
 
 function GearListCreateForm() {
-    useRedirect('loggedOut')
+  useRedirect('loggedOut')
   const [errors, setErrors] = useState({});
   const [listType, setListType] = useState("");
-
   const [gearListData, setGearListData] = useState({
     title: "",
     description: "",
     image: "",
   });
   const { title, description, image } = gearListData;
-
   const imageInput = useRef(null);
   const history = useHistory();
   const gearListCategories = [
     { value: "other", label: "Other" },
     { value: "bike", label: "Bike" },
-    { value: "climbing", label: "Climbing" },
     { value: "hiking", label: "Hiking" },
+    { value: "climbing", label: "Climbing" },
   ];
   
   const handleListTypeChange = (event) => {
@@ -51,7 +44,6 @@ function GearListCreateForm() {
         [event.target.name]: event.target.value,
       });
     }
-
 
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
@@ -79,34 +71,17 @@ function GearListCreateForm() {
       const { data } = await axiosReq.post("/gearlists/", formData);
       history.push(`/gearlists/${data.id}`);
     } catch (err) {
-    //   console.log(err);
+      console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }
     }
   };
 
-  const listField = (
-    <Form.Group controlId="listtype">
-    <Form.Label>Select a category</Form.Label>
-    <Form.Control 
-      as="select"
-      value={listType}
-      onChange={handleListTypeChange}
-    >
-      {gearListCategories.map((category) => (
-        <option key={category.value} value={category.value}>
-          {category.label}
-        </option>
-      ))}
-    </Form.Control>
-  </Form.Group>
-  )
 
   const textFields = (
     <div className="text-center">
-    <h5>Create Gear List</h5>
-
+      
       <Form.Group>
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -138,6 +113,27 @@ function GearListCreateForm() {
         </Alert>
       ))}
 
+      <Form.Group controlId="listtype">
+        <Form.Label>Category</Form.Label>
+        <Form.Control 
+          as="select"
+          name="listType"
+          value={listType}
+          onChange={handleListTypeChange}
+        >
+          {gearListCategories.map((category) => (
+            <option key={category.value} value={category.value}>
+              {category.label}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
+      {errors?.listType?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
         onClick={() => history.goBack()}
@@ -157,6 +153,9 @@ function GearListCreateForm() {
   return (
   <>    
     <Form onSubmit={handleSubmit}>
+      <h1 className={appStyles.header}>
+        Create Gear List
+      </h1>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container
@@ -166,7 +165,11 @@ function GearListCreateForm() {
               {image ? (
                 <>
                   <figure>
-                    <Image className={appStyles.Image} src={image} rounded />
+                    <Image 
+                      className={appStyles.Image} 
+                      src={image} 
+                      rounded 
+                    />
                   </figure>
                   <div>
                     <Form.Label
@@ -206,7 +209,7 @@ function GearListCreateForm() {
           </Container>
         </Col>
         <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-          <Container className={appStyles.Content}>{textFields}{listField}</Container>
+          <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
     </Form>
