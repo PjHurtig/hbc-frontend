@@ -21,6 +21,7 @@ import GearListEditForm from "./pages/gearlists/GearListEditForm";
 import EventCreateForm from "./pages/events/EventCreateForm";
 import EventPage from "./pages/events/EventPage";
 import EventEditForm from "./pages/events/EventEditForm";
+import CalendarPage from "./pages/calendars/CalendarPage";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -150,6 +151,12 @@ function App() {
             exact 
             path="/events/:id/edit" 
             render={() => <EventEditForm />} 
+          />
+
+          <Route 
+            exact 
+            path="/calendar" 
+            render={() => <CalendarPage />} 
           />
 
           <Route render={() => <NotFound />} />
