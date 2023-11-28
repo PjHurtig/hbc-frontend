@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -7,24 +6,20 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import Image from "react-bootstrap/Image";
-
 import styles from "../../styles/PostCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-
 import { useHistory, useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
 function PostEditForm() {
   const [errors, setErrors] = useState({});
-
   const [postData, setPostData] = useState({
     title: "",
     content: "",
     image: "",
   });
   const { title, content, image } = postData;
-
   const imageInput = useRef(null);
   const history = useHistory();
   const { id } = useParams();
@@ -122,7 +117,11 @@ function PostEditForm() {
       >
         cancel
       </Button>
-      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+
+      <Button 
+        className={`${btnStyles.Button} ${btnStyles.Blue}`} 
+        type="submit"
+      >
         save
       </Button>
     </div>
@@ -130,6 +129,9 @@ function PostEditForm() {
 
   return (
     <Form onSubmit={handleSubmit}>
+      <h1 className={appStyles.header}>
+        Edit Post
+      </h1>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container
@@ -137,7 +139,11 @@ function PostEditForm() {
           >
             <Form.Group className="text-center">
               <figure>
-                <Image className={appStyles.Image} src={image} rounded />
+                <Image 
+                  className={appStyles.Image} 
+                  src={image} 
+                  rounded 
+                />
               </figure>
               <div>
                 <Form.Label
