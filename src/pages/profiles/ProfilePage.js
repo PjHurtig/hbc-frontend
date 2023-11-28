@@ -24,10 +24,14 @@ import Post from "../posts/Post";
 import { fetchMoreData } from "../../utils/utils";
 import NoResults from "../../assets/no-results.png";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
+import GearList from "../gearlists/GearList";
+import Event from "../events/Event"
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [profilePosts, setProfilePosts] = useState({ results: [] });
+  const [profileEvents, setProfileEvents] = useState({ results: [] });
+  const [profileGearLists, setProfileGearLists] = useState({ results: [] });
 
   const currentUser = useCurrentUser();
   const { id } = useParams();
@@ -38,19 +42,30 @@ function ProfilePage() {
   const [profile] = pageProfile.results;
   const is_owner = currentUser?.username === profile?.owner;
 
+  const [activeButton, setActiveButton] = useState('posts');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [{ data: pageProfile }, { data: profilePosts }] =
+        const [
+          { data: pageProfile }, 
+          { data: profilePosts}, 
+          { data: profileEvents},
+          { data: profileGearLists},
+        ] =
           await Promise.all([
             axiosReq.get(`/profiles/${id}/`),
             axiosReq.get(`/posts/?owner__profile=${id}`),
+            axiosReq.get(`/events/?owner__profile=${id}`),
+            axiosReq.get(`/gearlists/?owner__profile=${id}`),
           ]);
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
         }));
         setProfilePosts(profilePosts);
+        setProfileEvents(profileEvents);
+        setProfileGearLists(profileGearLists);
         setHasLoaded(true);
       } catch (err) {
         console.log(err);
@@ -73,18 +88,32 @@ function ProfilePage() {
         <Col lg={6}>
           <h3 className="m-2">{profile?.owner}</h3>
           <Row className="justify-content-center no-gutters">
+
             <Col xs={3} className="my-2">
               <div>{profile?.posts_count}</div>
               <div>posts</div>
             </Col>
+
+            <Col xs={3} className="my-2">
+            <div>{profile?.events_count}</div>
+              <div>events</div>
+            </Col>
+
+            <Col xs={3} className="my-2">
+            <div>{profile?.gearlists_count}</div>
+              <div>gear lists</div>
+            </Col>
+
             <Col xs={3} className="my-2">
               <div>{profile?.followers_count}</div>
               <div>followers</div>
             </Col>
+
             <Col xs={3} className="my-2">
               <div>{profile?.following_count}</div>
               <div>following</div>
             </Col>
+
           </Row>
         </Col>
         <Col lg={3} className="text-lg-right">
@@ -111,28 +140,104 @@ function ProfilePage() {
     </>
   );
 
+  const handleButtonClick = (buttonName) => {
+    setActiveButton(buttonName);
+  };
+
   const mainProfilePosts = (
     <>
-      <hr />
-      <p className="text-center">{profile?.owner}'s posts</p>
-      <hr />
+    <hr />
+    <div className={styles.pagesButtons}>
+      <Button
+        className={`${btnStyles.Button}`}
+        onClick={() => handleButtonClick('posts')}
+        variant={activeButton === 'posts' ? 'primary' : 'secondary'} 
+      >
+        {profile?.owner}'s posts
+      </Button>
+
+      <Button
+        className={`${btnStyles.Button}`}
+        onClick={() => handleButtonClick('events')}
+        variant={activeButton === 'events' ? 'primary' : 'secondary'} 
+      >
+        {profile?.owner}'s events
+      </Button>
+
+      <Button
+        className={`${btnStyles.Button}`}
+        onClick={() => handleButtonClick('gearlists')}
+        variant={activeButton === 'gearlists' ? 'primary' : 'secondary'} 
+      >
+        {profile?.owner}'s gearlists
+      </Button>
+    </div>
+
+    <hr />
+
+    {activeButton === 'posts' && (
+      <>
       {profilePosts.results.length ? (
-        <InfiniteScroll
-          children={profilePosts.results.map((post) => (
-            <Post key={post.id} {...post} setPosts={setProfilePosts} />
-          ))}
-          dataLength={profilePosts.results.length}
-          loader={<Asset spinner />}
-          hasMore={!!profilePosts.next}
-          next={() => fetchMoreData(profilePosts, setProfilePosts)}
-        />
-      ) : (
-        <Asset
-          src={NoResults}
-          message={`No results found, ${profile?.owner} hasn't posted yet.`}
-        />
-      )}
-    </>
+      <InfiniteScroll
+        children={profilePosts.results.map((post) => (
+          <Post key={post.id} {...post} setPosts={setProfilePosts} />
+        ))}
+        dataLength={profilePosts.results.length}
+        loader={<Asset spinner />}
+        hasMore={!!profilePosts.next}
+        next={() => fetchMoreData(profilePosts, setProfilePosts)}
+      />
+    ) : (
+      <Asset
+        src={NoResults}
+        message={`No results found, ${profile?.owner} hasn't posted yet.`}
+      />
+    )}
+      </>
+    )}
+    {activeButton === 'events' && (
+<>
+  {profileEvents.results.length ? (
+    <InfiniteScroll
+      children={profileEvents.results.map((event) => (
+        <Event key={event.id} {...event} setEvents={setProfileEvents} />
+      ))}
+      dataLength={profileEvents.results.length}
+      loader={<Asset spinner />}
+      hasMore={!!profileEvents.next}
+      next={() => fetchMoreData(profileEvents, setProfileEvents)}
+    />
+  ) : (
+    <Asset
+      src={NoResults}
+      message={`No results found, ${profile?.owner} hasn't made an event yet.`}
+    />
+  )}
+</>
+    )}
+
+    {activeButton === 'gearlists' && (
+     <>
+     {profileGearLists.results.length ? (
+       <InfiniteScroll
+         children={profileGearLists.results.map((gearList) => (
+           <GearList key={gearList.id} {...gearList} setGearLists={setProfileGearLists} />
+         ))}
+         dataLength={profileGearLists.results.length}
+         loader={<Asset spinner />}
+         hasMore={!!profileGearLists.next}
+         next={() => fetchMoreData(profileGearLists, setProfileGearLists)}
+       />
+     ) : (
+       <Asset
+         src={NoResults}
+         message={`No results found, ${profile?.owner} hasn't made a gear list yet.`}
+       />
+     )}
+   </>
+    )}
+
+  </>
   );
 
   return (
