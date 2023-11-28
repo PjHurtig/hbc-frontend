@@ -27,6 +27,11 @@
   background-color: #2142b2;
 }
 
+.pagesButtons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .Wide {
   padding: 10px 50px;
   width: 100%;
@@ -48,17 +53,12 @@
 
 .Black,
 .BlackOutline:hover {
-  /* background-color: #242a3d;
-  color: white; */
   background-color: #242a3d;
   color: aliceblue;
 }
 
 .Black:hover,
 .BlackOutline {
-  /* background-color: #dadadf;
-  color: #242a3d;
-  border-color: #242a3d; */
   background-color: aliceblue;
   color: #242a3d;
 }

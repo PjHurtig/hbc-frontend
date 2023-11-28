@@ -5,7 +5,7 @@
 }
 
 .Main {
-  padding-top: 81px;
+  padding-top: 101px;
 }
 
 .Content {
@@ -92,4 +92,12 @@ figure {
 }
 *::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@media screen and (max-width: 480px) {
+  
+  .Main {
+    padding-top: 131px;
+  }
+
 }

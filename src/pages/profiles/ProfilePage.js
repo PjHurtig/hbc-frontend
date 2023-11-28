@@ -147,7 +147,7 @@ function ProfilePage() {
   const mainProfilePosts = (
     <>
     <hr />
-    <div className={styles.pagesButtons}>
+    <div className={btnStyles.pagesButtons}>
       <Button
         className={`${btnStyles.Button}`}
         onClick={() => handleButtonClick('posts')}
