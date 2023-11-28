@@ -122,7 +122,7 @@ function EventEditForm() {
         </Alert>
       ))}
 
-      <Form.Group controlId="category">
+      <Form.Group>
         <Form.Label>Category</Form.Label>
         <Form.Control 
           as="select"
