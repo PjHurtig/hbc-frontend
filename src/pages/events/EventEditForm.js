@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -7,28 +6,23 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import Image from "react-bootstrap/Image";
-
 import styles from "../../styles/PostCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-
 import { useHistory, useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import DatePicker from "react-datepicker";
 
 function EventEditForm() {
   const [errors, setErrors] = useState({});
-
   const [category, setCategory] = useState("");
   const [startDate, setStartDate] = useState(new Date());
-
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
     image: "",
   });
   const { title, description, image } = eventData;
-
   const imageInput = useRef(null);
   const history = useHistory();
   const { id } = useParams();
@@ -95,37 +89,6 @@ function EventEditForm() {
     }
   };
 
-  const categoryField = (
-    <Form.Group controlId="category">
-      <Form.Label>Select a category</Form.Label>
-      <Form.Control 
-        as="select"
-        value={category}
-        name="category"
-        onChange={(e) => setCategory(e.target.value)}
-        >
-        <option value="other">Other</option>
-        <option value="bike">Bike</option>
-        <option value="hiking">Hiking</option>
-        <option value="climbing">Climbing</option>
-      </Form.Control>
-    </Form.Group>
-  );
-  
-  const datePickerField = (
-    <Form.Group>
-      <Form.Label>Date</Form.Label>
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        showTimeInput
-        name="start_time"
-        dateFormat="yyyy-MM-dd HH:mm:ss"
-        timeFormat="HH:mm:ss"
-      />
-    </Form.Group>
-  );
-
   const textFields = (
     <div className="text-center">
       <Form.Group>
@@ -154,6 +117,43 @@ function EventEditForm() {
         />
       </Form.Group>
       {errors?.content?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+
+      <Form.Group controlId="category">
+        <Form.Label>Category</Form.Label>
+        <Form.Control 
+          as="select"
+          value={category}
+          name="category"
+          onChange={(e) => setCategory(e.target.value)}
+          >
+          <option value="other">Other</option>
+          <option value="hiking">Hiking</option>
+          <option value="bike">Bike</option>
+          <option value="climbing">Climbing</option>
+        </Form.Control>
+      </Form.Group>
+      {errors?.category?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+
+      <Form.Group>
+        <Form.Label>Date</Form.Label>
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          showTimeInput
+          name="start_time"
+          dateFormat="yyyy-MM-dd HH:mm:ss"
+          timeFormat="HH:mm:ss"
+        />
+      </Form.Group>
+      {errors?.start_time?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
         </Alert>
@@ -211,8 +211,6 @@ function EventEditForm() {
             <div 
               className="d-md-none">
               {textFields}
-              {categoryField}
-              {datePickerField}
             </div>
           </Container>
         </Col>
@@ -220,8 +218,6 @@ function EventEditForm() {
           <Container 
             className={appStyles.Content}>
             {textFields}
-            {categoryField}
-            {datePickerField}
           </Container>
         </Col>
       </Row>
