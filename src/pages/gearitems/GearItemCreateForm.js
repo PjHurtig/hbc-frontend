@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-
 import Form from "react-bootstrap/Form";
 import Upload from "../../assets/upload.png";
 import Image from "react-bootstrap/Image";
-
 import styles from "../../styles/GearItemCreateEditForm.module.css";
 import { axiosRes } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
@@ -17,16 +15,15 @@ function GearItemCreateForm(props) {
   const [errors, setErrors] = useState({});
   const { gearList, setGearList, setGearItems } = props;
   const [successMessage, setSuccessMessage] = useState("");
-
   const [formData, setFormData] = useState({
     gearlist: "",
     name: "",
     about: "",
     image: "",
   });
-
   const { name, about, image } = formData;
   const imageInput = useRef(null);
+  const timeoutId = useRef();
 
   const handleInputChange = (event) => {
     const { name, value, type, files } = event.target;
@@ -37,7 +34,6 @@ function GearItemCreateForm(props) {
         [name]: files[0], 
       });
     } else {
-
       setFormData({
         ...formData,
         [name]: value,
@@ -54,8 +50,6 @@ function GearItemCreateForm(props) {
       });
     }
   };
-
-  const timeoutId = useRef();
   
   const clearErrors = () => {
     setErrors({});
@@ -70,8 +64,8 @@ function GearItemCreateForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const formDataToSend = new FormData();
+
     formDataToSend.append("name", name);
     formDataToSend.append("about", about);
     formDataToSend.append("gearlist", gearList); 
@@ -82,7 +76,6 @@ function GearItemCreateForm(props) {
 
     try {
       const { data } = await axiosRes.post(`/gearitems/`, formDataToSend);
-
 
       setGearItems((prevGearItems) => ({
         ...prevGearItems,
@@ -111,6 +104,7 @@ function GearItemCreateForm(props) {
         }
       }
   };
+
   return (
     <Form 
       onSubmit={handleSubmit}
@@ -124,33 +118,34 @@ function GearItemCreateForm(props) {
       )}
 
       <Form.Group>
-          <Form.Control 
+        <Form.Label className="d-none">Name</Form.Label>
+        <Form.Control 
           placeholder="Item name..."
           name="name"
           value={name}
           onChange={handleInputChange} 
-          />
+        />
       </Form.Group>
       {errors?.name?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
-        {message}
+          {message}
         </Alert>
       ))}
   
       <Form.Group>
-          <Form.Label></Form.Label>
+        <Form.Label className="d-none">About</Form.Label>
           <Form.Control 
-          placeholder="About the item..."
-          name="about"
-          value={about}
-          onChange={handleInputChange}
-          as="textarea" 
-          rows={3} 
+            placeholder="About the item..."
+            name="about"
+            value={about}
+            onChange={handleInputChange}
+            as="textarea" 
+            rows={3} 
           />
       </Form.Group>
       {errors?.about?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
-        {message}
+          {message}
         </Alert>
       ))}
 
@@ -194,13 +189,12 @@ function GearItemCreateForm(props) {
         </Alert>
       ))}
 
-
-        <button
-          className={`${styles.Button} btn d-block ml-auto`}
-          type="submit"
-        >
-          Add
-        </button>
+      <button
+        className={`${styles.Button} btn d-block ml-auto`}
+        type="submit"
+      >
+        Add
+      </button>
     </Form>
   );
 }
