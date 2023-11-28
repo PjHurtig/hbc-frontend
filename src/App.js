@@ -24,6 +24,7 @@ import EventPage from "./pages/events/EventPage";
 import EventsPage from "./pages/events/EventsPage";
 import EventEditForm from "./pages/events/EventEditForm";
 import CalendarPage from "./pages/calendars/CalendarPage";
+import HomePage from "./pages/roots/HomePage";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -38,9 +39,7 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => (
-              <PostsPage message="No results found. Adjust the search keyword." />
-            )}
+            render={() => <HomePage />}
           />
 
           <Route
