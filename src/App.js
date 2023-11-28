@@ -17,9 +17,11 @@ import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import NotFound from "./components/NotFound";
 import GearListCreateForm from "./pages/gearlists/GearListCreateForm";
 import GearListPage from "./pages/gearlists/GearListPage";
+import GearListsPage from "./pages/gearlists/GearListsPage";
 import GearListEditForm from "./pages/gearlists/GearListEditForm";
 import EventCreateForm from "./pages/events/EventCreateForm";
 import EventPage from "./pages/events/EventPage";
+import EventsPage from "./pages/events/EventsPage";
 import EventEditForm from "./pages/events/EventEditForm";
 import CalendarPage from "./pages/calendars/CalendarPage";
 
@@ -117,6 +119,14 @@ function App() {
             render={() => <ProfileEditForm />}
           />
 
+          <Route
+            exact
+            path="/gearlists"
+            render={() => (
+              <GearListsPage message="No results found. Adjust the search keyword." />
+            )}
+          />
+
           <Route 
             exact 
             path="/gearlists/create" 
@@ -133,6 +143,14 @@ function App() {
             exact 
             path="/gearlists/:id/edit" 
             render={() => <GearListEditForm />} 
+          />
+
+          <Route
+            exact
+            path="/events"
+            render={() => (
+              <EventsPage message="No results found. Adjust the search keyword." />
+            )}
           />
 
           <Route 
