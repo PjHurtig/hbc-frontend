@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 
+import styles from '../../styles/Calendar.module.css'
+
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -62,13 +64,15 @@ const CalendarPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.Padding}>
       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
+        style={{ 
+          height: 500 
+        }}
         eventPropGetter={getEventStyle}
         onSelectEvent={handleEventSelect}
       />
