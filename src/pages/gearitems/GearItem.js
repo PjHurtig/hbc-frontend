@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Accordion, Button, Card, Modal } from "react-bootstrap";
+import { Accordion, Card } from "react-bootstrap";
 
 import { MoreDropdown } from "../../components/MoreDropdown";
 import GearItemEditForm from "./GearItemEditForm";
@@ -9,6 +9,8 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { axiosRes } from "../../api/axiosDefaults";
 
 import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
+import ConfirmDelete from "../../components/ConfirmDelete";
 
 const GearItem = (props) => {
   const {
@@ -24,13 +26,16 @@ const GearItem = (props) => {
     setGearItems,
   } = props;
 
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
   const { triggerSuccessMessage } = useSuccessMessage();
 
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
+  const openConfirmDelete = () => setShowConfirmDelete(true);
+  const closeConfirmDelete = () => setShowConfirmDelete(false);
 
   const handleDelete = async () => {
     try {
@@ -52,28 +57,15 @@ const GearItem = (props) => {
 
     }
   };
-  
-  const openConfirmDelete = () => setShowConfirmDelete(true);
-  const closeConfirmDelete = () => setShowConfirmDelete(false);
 
   return (
     <>
-      <Modal show={showConfirmDelete} onHide={closeConfirmDelete}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Deletion</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete "{name}" from the gear list?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={closeConfirmDelete}>
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={() => { handleDelete(); closeConfirmDelete(); }}>
-              Delete
-            </Button>
-          </Modal.Footer>
-        </Modal>
+      <ConfirmDelete
+        show={showConfirmDelete}
+        handleClose={closeConfirmDelete}
+        handleDelete={handleDelete}
+        itemName={name}
+      />
 
       <Accordion defaultActiveKey="1">
         <Card>
