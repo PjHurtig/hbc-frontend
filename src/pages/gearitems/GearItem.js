@@ -27,6 +27,9 @@ const GearItem = (props) => {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
+  // for succesmessage on deletion
+  const { handleItemDeleted } = props;
+
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/gearitems/${id}/`);
@@ -42,6 +45,7 @@ const GearItem = (props) => {
       setGearItems((prevGearItems) => ({
         results: prevGearItems.results.filter((gearitem) => gearitem.id !== id),
       }));
+      handleItemDeleted();
     } catch (err) {
 
     }
