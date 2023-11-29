@@ -16,7 +16,7 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
-import { Alert, Button, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 function GearListPage() {
   const { id } = useParams();
@@ -31,15 +31,6 @@ function GearListPage() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  // successmessage when deleting a gearitem 
-  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-
-  const handleItemDeleted = () => {
-    setShowSuccessAlert(true);
-    setTimeout(() => setShowSuccessAlert(false), 3000);
-  };
-
 
   useEffect(() => {
     const handleMount = async () => {
@@ -100,15 +91,11 @@ function GearListPage() {
           ) : gearItems.results.length ? (
             "Gear Items"
           ) : null}
-          {showSuccessAlert && (
-            <Alert variant="success">Gear item successfully deleted!</Alert>
-          )}
           {gearItems.results.length ? (
             <InfiniteScroll
               children={gearItems.results.map((gearItem) => (
                 <GearItem
                   key={gearItem.id}
-                  handleItemDeleted={handleItemDeleted}
                   {...gearItem}
                   setGearList={setGearList}
                   setGearItems={setGearItems}

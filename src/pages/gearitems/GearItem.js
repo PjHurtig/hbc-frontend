@@ -8,6 +8,8 @@ import styles from "../../styles/GearItem.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { axiosRes } from "../../api/axiosDefaults";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 const GearItem = (props) => {
   const {
     profile_id,
@@ -27,12 +29,13 @@ const GearItem = (props) => {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
-  // for succesmessage on deletion
-  const { handleItemDeleted } = props;
+  const { triggerSuccessMessage } = useSuccessMessage();
+
 
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/gearitems/${id}/`);
+      triggerSuccessMessage('Gear item successfully deleted!');
       setGearList((prevGearList) => ({
         results: [
           {
@@ -45,7 +48,6 @@ const GearItem = (props) => {
       setGearItems((prevGearItems) => ({
         results: prevGearItems.results.filter((gearitem) => gearitem.id !== id),
       }));
-      handleItemDeleted();
     } catch (err) {
 
     }
