@@ -5,6 +5,8 @@ import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 import {
   Form,
   Button,
@@ -30,6 +32,8 @@ const SignUpForm = () => {
 
   const history = useHistory();
 
+  const { triggerSuccessMessage } = useSuccessMessage();
+
   const handleChange = (event) => {
     setSignUpData({
       ...signUpData,
@@ -41,6 +45,7 @@ const SignUpForm = () => {
     event.preventDefault();
     try {
       await axios.post("/dj-rest-auth/registration/", signUpData);
+      triggerSuccessMessage('User successfully created!');
       history.push("/signin");
     } catch (err) {
       setErrors(err.response?.data);

@@ -18,6 +18,8 @@ import {
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 const ProfileEditForm = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
@@ -33,6 +35,8 @@ const ProfileEditForm = () => {
   const { name, content, image } = profileData;
 
   const [errors, setErrors] = useState({});
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   useEffect(() => {
     const handleMount = async () => {
@@ -76,6 +80,7 @@ const ProfileEditForm = () => {
         ...currentUser,
         profile_image: data.image,
       }));
+      triggerSuccessMessage('Profile successfully updated!');
       history.goBack();
     } catch (err) {
       console.log(err);

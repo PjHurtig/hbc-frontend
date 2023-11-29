@@ -18,6 +18,8 @@ import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { useRedirect } from "../../hooks/useRedirect";
 import { setTokenTimestamp } from "../../utils/utils";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
   useRedirect("loggedIn");
@@ -31,6 +33,9 @@ function SignInForm() {
   const [errors, setErrors] = useState({});
 
   const history = useHistory();
+
+  const { triggerSuccessMessage } = useSuccessMessage();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -38,6 +43,7 @@ function SignInForm() {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
       setTokenTimestamp(data)
+      triggerSuccessMessage('Successfully signed in!');
       history.goBack();
     } catch (err) {
       setErrors(err.response?.data);
