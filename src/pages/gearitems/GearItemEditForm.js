@@ -6,6 +6,8 @@ import { axiosRes } from "../../api/axiosDefaults";
 
 import styles from "../../styles/GearItemCreateEditForm.module.css";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function GearItemEditForm(props) {
   const { id, name, about, setShowEditForm, setGearItems, image } = props;
 
@@ -15,6 +17,8 @@ function GearItemEditForm(props) {
   const [formName, setFormName] = useState(name);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(image);
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -65,6 +69,7 @@ function GearItemEditForm(props) {
           return gearItem;
         }),
       }));
+      triggerSuccessMessage(`"${data.name}" successfully updated!`);
       setShowEditForm(false);
     } catch (err) {
       console.log(err);

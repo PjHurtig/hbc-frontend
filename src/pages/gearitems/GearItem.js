@@ -35,7 +35,7 @@ const GearItem = (props) => {
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/gearitems/${id}/`);
-      triggerSuccessMessage('Gear item successfully deleted!');
+      triggerSuccessMessage(`"${name}" successfully deleted!`);
       setGearList((prevGearList) => ({
         results: [
           {
@@ -63,7 +63,7 @@ const GearItem = (props) => {
             <Modal.Title>Confirm Deletion</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Are you sure you want to delete this gear item?
+            Are you sure you want to delete "{name}" from the gear list?
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={closeConfirmDelete}>
