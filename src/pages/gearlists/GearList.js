@@ -7,6 +7,8 @@ import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 
 const GearList = (props) => {
   const {
@@ -28,6 +30,8 @@ const GearList = (props) => {
   const is_owner = currentUser?.username === owner;
   const history = useHistory();
 
+  const { triggerSuccessMessage } = useSuccessMessage();
+
   const handleEdit = () => {
     history.push(`/gearlists/${id}/edit`);
   };
@@ -35,6 +39,7 @@ const GearList = (props) => {
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/gearlists/${id}/`);
+      triggerSuccessMessage('Gear list successfully deleted!');
       history.goBack();
     } catch (err) {
       console.log(err);
