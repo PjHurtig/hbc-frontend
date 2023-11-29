@@ -7,6 +7,8 @@ import Avatar from "../../components/Avatar";
 import { MoreDropdown } from "../../components/MoreDropdown";
 import { axiosRes } from "../../api/axiosDefaults";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 const Event = (props) => {
   const {
     id,
@@ -27,6 +29,8 @@ const Event = (props) => {
   const is_owner = currentUser?.username === owner;
   const history = useHistory();
 
+  const { triggerSuccessMessage } = useSuccessMessage();
+
   const handleEdit = () => {
     history.push(`/events/${id}/edit`);
   };
@@ -34,6 +38,7 @@ const Event = (props) => {
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/events/${id}/`);
+      triggerSuccessMessage('Event successfully deleted!');
       history.goBack();
     } catch (err) {
       console.log(err);
