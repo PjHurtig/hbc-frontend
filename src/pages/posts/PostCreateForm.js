@@ -15,6 +15,8 @@ import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function PostCreateForm() {
   useRedirect("loggedOut");
   const [errors, setErrors] = useState({});
@@ -26,6 +28,8 @@ function PostCreateForm() {
   const { title, content, image } = postData;
   const imageInput = useRef(null);
   const history = useHistory();
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   const handleChange = (event) => {
     setPostData({
@@ -54,6 +58,7 @@ function PostCreateForm() {
 
     try {
       const { data } = await axiosReq.post("/posts/", formData);
+      triggerSuccessMessage('Post successfully created!');
       history.push(`/posts/${data.id}`);
     } catch (err) {
       console.log(err);

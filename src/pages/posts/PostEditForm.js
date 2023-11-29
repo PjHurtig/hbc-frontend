@@ -12,6 +12,8 @@ import btnStyles from "../../styles/Button.module.css";
 import { useHistory, useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function PostEditForm() {
   const [errors, setErrors] = useState({});
   const [postData, setPostData] = useState({
@@ -23,6 +25,8 @@ function PostEditForm() {
   const imageInput = useRef(null);
   const history = useHistory();
   const { id } = useParams();
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   useEffect(() => {
     const handleMount = async () => {
@@ -69,6 +73,7 @@ function PostEditForm() {
 
     try {
       await axiosReq.put(`/posts/${id}/`, formData);
+      triggerSuccessMessage('Post successfully updated!');
       history.push(`/posts/${id}`);
     } catch (err) {
       console.log(err);
