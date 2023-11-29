@@ -12,6 +12,8 @@ import btnStyles from "../../styles/Button.module.css";
 import { useHistory, useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function GearListEditForm() {
   const [errors, setErrors] = useState({});
   const [listType, setListType] = useState("");
@@ -31,6 +33,8 @@ function GearListEditForm() {
     { value: "climbing", label: "Climbing" },
     { value: "hiking", label: "Hiking" },
   ];
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   const handleListTypeChange = (event) => {
     setListType(event.target.value);
@@ -83,6 +87,7 @@ function GearListEditForm() {
 
     try {
       await axiosReq.put(`/gearlists/${id}/`, formData);
+      triggerSuccessMessage('Gear list successfully updated!');
       history.push(`/gearlists/${id}`);
     } catch (err) {
       if (err.response?.status !== 401) {

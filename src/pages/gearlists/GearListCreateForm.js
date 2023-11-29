@@ -15,6 +15,8 @@ import { useHistory } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function GearListCreateForm() {
   useRedirect('loggedOut')
   const [errors, setErrors] = useState({});
@@ -33,6 +35,8 @@ function GearListCreateForm() {
     { value: "hiking", label: "Hiking" },
     { value: "climbing", label: "Climbing" },
   ];
+
+  const { triggerSuccessMessage } = useSuccessMessage();
   
   const handleListTypeChange = (event) => {
     setListType(event.target.value);
@@ -69,6 +73,7 @@ function GearListCreateForm() {
 
     try {
       const { data } = await axiosReq.post("/gearlists/", formData);
+      triggerSuccessMessage('Gear list successfully created!');
       history.push(`/gearlists/${data.id}`);
     } catch (err) {
       console.log(err);
