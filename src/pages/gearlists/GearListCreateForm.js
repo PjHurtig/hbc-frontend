@@ -113,7 +113,7 @@ function GearListCreateForm() {
         </Alert>
       ))}
 
-      <Form.Group controlId="listtype">
+      <Form.Group>
         <Form.Label>Category</Form.Label>
         <Form.Control 
           as="select"
