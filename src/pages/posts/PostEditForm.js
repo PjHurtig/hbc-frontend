@@ -29,18 +29,25 @@ function PostEditForm() {
   const { triggerSuccessMessage } = useSuccessMessage();
 
   useEffect(() => {
+    let isMounted = true;
+    
     const handleMount = async () => {
       try {
         const { data } = await axiosReq.get(`/posts/${id}/`);
         const { title, content, image, is_owner } = data;
-
-        is_owner ? setPostData({ title, content, image }) : history.push("/");
+        if (isMounted) {
+          is_owner ? setPostData({ title, content, image }) : history.push("/");
+        }
       } catch (err) {
         console.log(err);
       }
     };
 
     handleMount();
+
+    return () => {
+      isMounted = false;
+    };
   }, [history, id]);
 
   const handleChange = (event) => {

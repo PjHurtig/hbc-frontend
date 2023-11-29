@@ -39,12 +39,16 @@ const ProfileEditForm = () => {
   const { triggerSuccessMessage } = useSuccessMessage();
 
   useEffect(() => {
+    let isMounted = true;
+    
     const handleMount = async () => {
       if (currentUser?.profile_id?.toString() === id) {
         try {
           const { data } = await axiosReq.get(`/profiles/${id}/`);
           const { name, content, image } = data;
+          if (isMounted) {
           setProfileData({ name, content, image });
+          }
         } catch (err) {
           console.log(err);
           history.push("/");
@@ -55,6 +59,10 @@ const ProfileEditForm = () => {
     };
 
     handleMount();
+
+    return () => {
+      isMounted = false;
+    };
   }, [currentUser, history, id]);
 
   const handleChange = (event) => {

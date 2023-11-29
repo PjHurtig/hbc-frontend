@@ -26,11 +26,15 @@ function PostsPage({ message, filter = "" }) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchPosts = async () => {
       try {
         const { data } = await axiosReq.get(`/posts/?${filter}search=${query}`);
-        setPosts(data);
-        setHasLoaded(true);
+        if (isMounted) {
+          setPosts(data);
+          setHasLoaded(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -43,7 +47,8 @@ function PostsPage({ message, filter = "" }) {
 
     return () => {
       clearTimeout(timer);
-    };
+      isMounted = false;
+    };    
   }, [filter, query, pathname]);
 
   return (

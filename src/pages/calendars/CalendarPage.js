@@ -28,6 +28,8 @@ const CalendarPage = () => {
   
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchEvents = async () => {
       try {
         const response = await axios.get("/events/");
@@ -40,13 +42,19 @@ const CalendarPage = () => {
           category: event.category,
 
         }));
+        if (isMounted) {
         setEvents(formattedEvents);
+        }
       } catch (error) {
         console.error("Error fetching events: ", error);
       }
     };
 
     fetchEvents();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
 

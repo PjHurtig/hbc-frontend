@@ -15,18 +15,26 @@ function EventPage() {
   const [event, setEvent] = useState({ results: [] });
 
   useEffect(() => {
+    let isMounted = true;
+    
     const handleMount = async () => {
       try {
         const [{ data: event }] = await Promise.all([
           axiosReq.get(`/events/${id}`),
         ]);
-        setEvent({ results: [event] });
+        if (isMounted) {
+          setEvent({ results: [event] });
+        }
       } catch (err) {
         console.log(err);
       }
     };
 
     handleMount();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
   return (

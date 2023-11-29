@@ -33,19 +33,22 @@ function GearListPage() {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     const handleMount = async () => {
       try {
         const [{ data: gearList }, { data: gearItems }] = await Promise.all([
           axiosReq.get(`/gearlists/${id}`),
           axiosReq.get(`/gearitems/?gearlist=${id}`),
         ]);
-        setGearList({ results: [gearList] });
-  
+        if (isMounted) {
+          setGearList({ results: [gearList] });
 
-        if (gearItems.results && Array.isArray(gearItems.results)) {
-          setGearItems(gearItems);
-        } else {
-          setGearItems({ results: [] });
+          if (gearItems.results && Array.isArray(gearItems.results)) {
+            setGearItems(gearItems);
+          } else {
+            setGearItems({ results: [] });
+          }
         }
       } catch (err) {
         console.log(err);
@@ -53,6 +56,10 @@ function GearListPage() {
     };
   
     handleMount();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
   
   return (

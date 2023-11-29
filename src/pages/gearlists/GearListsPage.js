@@ -26,11 +26,15 @@ function GearListsPage({ message, filter = "" }) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchGearLists = async () => {
       try {
         const { data } = await axiosReq.get(`/gearlists/?${filter}search=${query}`);
-        setGearLists(data);
-        setHasLoaded(true);
+        if (isMounted) {
+          setGearLists(data);
+          setHasLoaded(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -43,6 +47,7 @@ function GearListsPage({ message, filter = "" }) {
 
     return () => {
       clearTimeout(timer);
+      isMounted = false;
     };
   }, [filter, query, pathname]);
 

@@ -41,19 +41,26 @@ function GearListEditForm() {
   };
 
   useEffect(() => {
+    let isMounted = true;
+    
     const handleMount = async () => {
       try {
         const { data } = await axiosReq.get(`/gearlists/${id}/`);
         const { title, description, image, category, is_owner } = data;
-
-        is_owner ? setGearListData({ title, description, image }) : history.push("/");
-        setListType(category); 
+        if (isMounted) {
+          is_owner ? setGearListData({ title, description, image }) : history.push("/");
+          setListType(category); 
+        }
       } catch (err) {
         console.log(err);
       }
     };
 
     handleMount();
+
+    return () => {
+      isMounted = false;
+    };
   }, [history, id]);
 
   const handleChange = (event) => {

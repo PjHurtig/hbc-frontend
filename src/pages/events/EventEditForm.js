@@ -32,17 +32,21 @@ function EventEditForm() {
   const { triggerSuccessMessage } = useSuccessMessage();
 
   useEffect(() => {
+    let isMounted = true;
+
     const handleMount = async () => {
       try {
         const { data } = await axiosReq.get(`/events/${id}/`);
         const { title, description, category, start_time, image, is_owner } = data;
 
-        if (is_owner) {
-          setEventData({ title, description, image }) 
-          setCategory(category);
-          setStartDate(new Date(start_time));
-        } else {
-          history.push("/");
+        if (isMounted) {
+          if (is_owner) {
+            setEventData({ title, description, image }) 
+            setCategory(category);
+            setStartDate(new Date(start_time));
+          } else {
+            history.push("/");
+          }
         }
       } catch (err) {
         console.log(err);
@@ -50,6 +54,10 @@ function EventEditForm() {
     };
 
     handleMount();
+
+    return () => {
+      isMounted = false;
+    };
   }, [history, id]);
 
   const handleChange = (event) => {

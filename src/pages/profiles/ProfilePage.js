@@ -45,6 +45,8 @@ function ProfilePage() {
   const [activeButton, setActiveButton] = useState('posts');
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
       try {
         const [
@@ -59,6 +61,7 @@ function ProfilePage() {
             axiosReq.get(`/events/?owner__profile=${id}`),
             axiosReq.get(`/gearlists/?owner__profile=${id}`),
           ]);
+        if (isMounted) {
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
@@ -67,11 +70,16 @@ function ProfilePage() {
         setProfileEvents(profileEvents);
         setProfileGearLists(profileGearLists);
         setHasLoaded(true);
+      }
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
+    
+    return () => {
+      isMounted = false;
+    };
   }, [id, setProfileData]);
 
   const mainProfile = (

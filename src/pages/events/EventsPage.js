@@ -26,11 +26,15 @@ function EventsPage({ message, filter = "" }) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchGearLists = async () => {
       try {
         const { data } = await axiosReq.get(`/events/?${filter}search=${query}`);
-        setEvents(data);
-        setHasLoaded(true);
+        if (isMounted) {
+          setEvents(data);
+          setHasLoaded(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -43,6 +47,7 @@ function EventsPage({ message, filter = "" }) {
 
     return () => {
       clearTimeout(timer);
+      isMounted = false;
     };
   }, [filter, query, pathname]);
 

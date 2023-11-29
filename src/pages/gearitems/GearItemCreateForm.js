@@ -51,16 +51,13 @@ function GearItemCreateForm(props) {
     }
   };
   
-  const clearErrors = () => {
-    setErrors({});
-  };
-
   useEffect(() => {
-    const currentTimeoutId = timeoutId.current;
     return () => {
-      clearTimeout(currentTimeoutId);
+      if (timeoutId.current) {
+        clearTimeout(timeoutId.current);
+      }
     };
-  }, []);
+  }, []); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -90,7 +87,7 @@ function GearItemCreateForm(props) {
         ],
       }));
       setSuccessMessage("Gear item successfully created!");
-      setTimeout(() => setSuccessMessage(""), 3000);
+      timeoutId.current = setTimeout(() => setSuccessMessage(""), 3000);
       setFormData({
         name: "",
         about: "",
@@ -100,7 +97,6 @@ function GearItemCreateForm(props) {
         console.log(err);
         if (err.response?.status !== 401) {
           setErrors(err.response?.data);
-          timeoutId.current = setTimeout(clearErrors, 3000);
         }
       }
   };
