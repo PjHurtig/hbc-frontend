@@ -14,6 +14,8 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 const UserPasswordForm = () => {
   const history = useHistory();
   const { id } = useParams();
@@ -26,6 +28,8 @@ const UserPasswordForm = () => {
   const { new_password1, new_password2 } = userData;
 
   const [errors, setErrors] = useState({});
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   const handleChange = (event) => {
     setUserData({
@@ -45,6 +49,7 @@ const UserPasswordForm = () => {
     event.preventDefault();
     try {
       await axiosRes.post("/dj-rest-auth/password/change/", userData);
+      triggerSuccessMessage('Password successfully updated!');
       history.goBack();
     } catch (err) {
       console.log(err);
