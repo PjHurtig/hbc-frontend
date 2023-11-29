@@ -56,6 +56,7 @@ function PostsPage({ message, filter = "" }) {
           onSubmit={(event) => event.preventDefault()}
         >
           <Form.Control
+            name="post-search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             type="text"

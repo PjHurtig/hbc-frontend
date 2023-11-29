@@ -56,11 +56,12 @@ function EventsPage({ message, filter = "" }) {
           onSubmit={(e) => e.preventDefault()}
         >
           <Form.Control
+            name="events-search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             type="text"
             className="mr-sm-2"
-            placeholder="Search posts"
+            placeholder="Search events"
           />
         </Form>
 
