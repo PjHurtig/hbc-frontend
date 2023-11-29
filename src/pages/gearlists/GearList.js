@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/Post.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Media } from "react-bootstrap";
@@ -9,6 +9,7 @@ import { MoreDropdown } from "../../components/MoreDropdown";
 
 import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
 
+import ConfirmDelete from "../../components/ConfirmDelete";
 
 const GearList = (props) => {
   const {
@@ -32,6 +33,10 @@ const GearList = (props) => {
 
   const { triggerSuccessMessage } = useSuccessMessage();
 
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const openConfirmDelete = () => setShowConfirmDelete(true);
+  const closeConfirmDelete = () => setShowConfirmDelete(false);
+
   const handleEdit = () => {
     history.push(`/gearlists/${id}/edit`);
   };
@@ -47,39 +52,47 @@ const GearList = (props) => {
   };
 
   return (
-    <Card className={styles.Post}>
-      <Card.Body>
-        <Media className="align-items-center justify-content-between">
-          <Link to={`/profiles/${profile_id}`}>
-            <Avatar src={profile_image} height={55} />
-            {owner}
-          </Link>
-          <div className="d-flex align-items-center">
-            <span>{updated_at}</span>
-            {is_owner && gearListPage && (
-              <MoreDropdown
-                handleEdit={handleEdit}
-                handleDelete={handleDelete}
-              />
-            )}
+    <>
+      <ConfirmDelete
+        show={showConfirmDelete}
+        handleClose={closeConfirmDelete}
+        handleDelete={handleDelete}
+        itemName={title}
+      />
+      <Card className={styles.Post}>
+        <Card.Body>
+          <Media className="align-items-center justify-content-between">
+            <Link to={`/profiles/${profile_id}`}>
+              <Avatar src={profile_image} height={55} />
+              {owner}
+            </Link>
+            <div className="d-flex align-items-center">
+              <span>{updated_at}</span>
+              {is_owner && gearListPage && (
+                <MoreDropdown
+                  handleEdit={handleEdit}
+                  handleDelete={openConfirmDelete}
+                />
+              )}
+            </div>
+          </Media>
+        </Card.Body>
+        <Link to={`/gearlists/${id}`}>
+          <Card.Img src={image} alt={title} />
+        </Link>
+        <Card.Body>
+        {title && <Card.Title className="text-center">{title} - {category}</Card.Title>}
+          {description && <Card.Text>{description}</Card.Text>}
+          <div className={styles.PostBar}>
+            
+            <Link to={`/gearlists/${id}`}>
+              <i className="far fa-comments" />
+            </Link>
+            {gearitems_count}
           </div>
-        </Media>
-      </Card.Body>
-      <Link to={`/gearlists/${id}`}>
-        <Card.Img src={image} alt={title} />
-      </Link>
-      <Card.Body>
-      {title && <Card.Title className="text-center">{title} - {category}</Card.Title>}
-        {description && <Card.Text>{description}</Card.Text>}
-        <div className={styles.PostBar}>
-          
-          <Link to={`/gearlists/${id}`}>
-            <i className="far fa-comments" />
-          </Link>
-          {gearitems_count}
-        </div>
-      </Card.Body>
-    </Card>
+        </Card.Body>
+      </Card>
+    </>
   );
 };
 

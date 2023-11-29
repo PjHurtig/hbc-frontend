@@ -11,6 +11,8 @@ import { axiosRes } from "../../api/axiosDefaults";
 
 import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
 
+import ConfirmDelete from "../../components/ConfirmDelete";
+
 const Comment = (props) => {
   const {
     profile_id,
@@ -28,6 +30,10 @@ const Comment = (props) => {
   const is_owner = currentUser?.username === owner;
 
   const { triggerSuccessMessage } = useSuccessMessage();
+
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const openConfirmDelete = () => setShowConfirmDelete(true);
+  const closeConfirmDelete = () => setShowConfirmDelete(false);
 
   const handleDelete = async () => {
     try {
@@ -50,6 +56,12 @@ const Comment = (props) => {
 
   return (
     <>
+    <ConfirmDelete
+        show={showConfirmDelete}
+        handleClose={closeConfirmDelete}
+        handleDelete={handleDelete}
+        itemName={content}
+      />
       <hr />
       <Media>
         <Link to={`/profiles/${profile_id}`}>
@@ -74,7 +86,7 @@ const Comment = (props) => {
         {is_owner && !showEditForm && (
           <MoreDropdown
             handleEdit={() => setShowEditForm(true)}
-            handleDelete={handleDelete}
+            handleDelete={openConfirmDelete}
           />
         )}
       </Media>

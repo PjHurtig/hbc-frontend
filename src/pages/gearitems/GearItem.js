@@ -33,7 +33,6 @@ const GearItem = (props) => {
   const { triggerSuccessMessage } = useSuccessMessage();
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-
   const openConfirmDelete = () => setShowConfirmDelete(true);
   const closeConfirmDelete = () => setShowConfirmDelete(false);
 

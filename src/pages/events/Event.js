@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/Post.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { Card, Media } from "react-bootstrap";
@@ -8,6 +8,9 @@ import { MoreDropdown } from "../../components/MoreDropdown";
 import { axiosRes } from "../../api/axiosDefaults";
 
 import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
+import ConfirmDelete from "../../components/ConfirmDelete";
+
 
 const Event = (props) => {
   const {
@@ -31,6 +34,10 @@ const Event = (props) => {
 
   const { triggerSuccessMessage } = useSuccessMessage();
 
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const openConfirmDelete = () => setShowConfirmDelete(true);
+  const closeConfirmDelete = () => setShowConfirmDelete(false);
+
   const handleEdit = () => {
     history.push(`/events/${id}/edit`);
   };
@@ -46,6 +53,13 @@ const Event = (props) => {
   };
 
   return (
+  <>
+    <ConfirmDelete
+      show={showConfirmDelete}
+      handleClose={closeConfirmDelete}
+      handleDelete={handleDelete}
+      itemName={title}
+    />
     <Card className={styles.Post}>
       <Card.Body>
         <Media className="align-items-center justify-content-between">
@@ -58,7 +72,7 @@ const Event = (props) => {
             {is_owner && eventPage && (
               <MoreDropdown
                 handleEdit={handleEdit}
-                handleDelete={handleDelete}
+                handleDelete={openConfirmDelete}
               />
             )}
           </div>
@@ -81,6 +95,7 @@ const Event = (props) => {
         </div>
       </Card.Body>
     </Card>
+  </>
   );
 };
 
