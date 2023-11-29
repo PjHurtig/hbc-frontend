@@ -14,3 +14,23 @@
 a:hover {
   color: black;
 }
+
+/* render the successmessage div below the navbar */
+.SuccessMessage {
+  position: fixed;
+  top: 10vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1050;
+  padding-top: 10px;
+  }
+  
+
+  @media (max-width: 768px) {
+
+    /* further down on smaller screens when icons changes the height of navbar */
+    .SuccessMessage {
+      top: 15vh;
+  }
+} 
