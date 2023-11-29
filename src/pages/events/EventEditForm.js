@@ -13,6 +13,8 @@ import { useHistory, useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import DatePicker from "react-datepicker";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function EventEditForm() {
   const [errors, setErrors] = useState({});
   const [category, setCategory] = useState("");
@@ -26,6 +28,8 @@ function EventEditForm() {
   const imageInput = useRef(null);
   const history = useHistory();
   const { id } = useParams();
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   useEffect(() => {
     const handleMount = async () => {
@@ -80,6 +84,7 @@ function EventEditForm() {
 
     try {
       await axiosReq.put(`/events/${id}/`, formData);
+      triggerSuccessMessage('Event successfully updated!');
       history.push(`/events/${id}`);
     } catch (err) {
       console.log(err);

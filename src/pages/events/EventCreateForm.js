@@ -17,6 +17,8 @@ import { useRedirect } from "../../hooks/useRedirect";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function EventCreateForm() {
     useRedirect('loggedOut')
   const [errors, setErrors] = useState({});
@@ -36,6 +38,8 @@ function EventCreateForm() {
     { value: "hiking", label: "Hiking" },
     { value: "climbing", label: "Climbing" },
   ];
+
+  const { triggerSuccessMessage } = useSuccessMessage();
   
   const handleListTypeChange = (event) => {
     setListType(event.target.value);
@@ -73,6 +77,7 @@ function EventCreateForm() {
     
     try {
       const { data } = await axiosReq.post("/events/", formData);
+      triggerSuccessMessage('Event successfully created!');
       history.push(`/events/${data.id}`);
     } catch (err) {
       console.log(err);
