@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
 
 const Post = (props) => {
   const {
@@ -28,6 +29,10 @@ const Post = (props) => {
   const is_owner = currentUser?.username === owner;
   const history = useHistory();
 
+  // trigger success message in the navbar component via 
+  // SuccessMessageContext, called in the handleDelete function
+  const { triggerSuccessMessage } = useSuccessMessage();
+
   const handleEdit = () => {
     history.push(`/posts/${id}/edit`);
   };
@@ -35,6 +40,7 @@ const Post = (props) => {
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/posts/${id}/`);
+      triggerSuccessMessage('Post successfully deleted!');
       history.goBack();
     } catch (err) {
       console.log(err);
