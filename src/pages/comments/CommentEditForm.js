@@ -5,10 +5,14 @@ import { axiosRes } from "../../api/axiosDefaults";
 
 import styles from "../../styles/CommentCreateEditForm.module.css";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function CommentEditForm(props) {
   const { id, content, setShowEditForm, setComments } = props;
 
   const [formContent, setFormContent] = useState(content);
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   const handleChange = (event) => {
     setFormContent(event.target.value);
@@ -32,6 +36,7 @@ function CommentEditForm(props) {
             : comment;
         }),
       }));
+      triggerSuccessMessage('Comment successfully updated!');
       setShowEditForm(false);
     } catch (err) {
       console.log(err);

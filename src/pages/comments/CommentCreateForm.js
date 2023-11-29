@@ -8,9 +8,13 @@ import styles from "../../styles/CommentCreateEditForm.module.css";
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 function CommentCreateForm(props) {
   const { post, setPost, setComments, profileImage, profile_id } = props;
   const [content, setContent] = useState("");
+
+  const { triggerSuccessMessage } = useSuccessMessage();
 
   const handleChange = (event) => {
     setContent(event.target.value);
@@ -35,6 +39,7 @@ function CommentCreateForm(props) {
           },
         ],
       }));
+      triggerSuccessMessage('Comment successfully created!');
       setContent("");
     } catch (err) {
       console.log(err);

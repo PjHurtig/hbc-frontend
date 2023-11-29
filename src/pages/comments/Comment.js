@@ -9,6 +9,8 @@ import styles from "../../styles/Comment.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { axiosRes } from "../../api/axiosDefaults";
 
+import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
+
 const Comment = (props) => {
   const {
     profile_id,
@@ -25,6 +27,8 @@ const Comment = (props) => {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
+  const { triggerSuccessMessage } = useSuccessMessage();
+
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/comments/${id}/`);
@@ -36,7 +40,7 @@ const Comment = (props) => {
           },
         ],
       }));
-
+      triggerSuccessMessage('Comment successfully deleted!');
       setComments((prevComments) => ({
         ...prevComments,
         results: prevComments.results.filter((comment) => comment.id !== id),
