@@ -9,7 +9,6 @@ import { ProfileDataProvider } from "./contexts/ProfileDataContext";
 import { SuccessMessageProvider } from "./contexts/SuccessMessageContext"
 
 ReactDOM.render(
-  <React.StrictMode>
     <Router>
       <CurrentUserProvider>
         <ProfileDataProvider>
@@ -18,8 +17,7 @@ ReactDOM.render(
           </SuccessMessageProvider>
         </ProfileDataProvider>
       </CurrentUserProvider>
-    </Router>
-  </React.StrictMode>,
+    </Router>,
   document.getElementById("root")
 );
 
