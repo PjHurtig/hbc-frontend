@@ -214,8 +214,8 @@ function ProfilePage() {
 <>
 <div className="text-center">
       {is_owner 
-        ? "Click on an event to see datails and edit or delete" 
-        : "Click on an event list to see datails"}
+        ? "Click on an event to see details and edit or delete" 
+        : "Click on an event to see details"}
     </div>
   {profileEvents.results.length ? (
     <InfiniteScroll
