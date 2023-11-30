@@ -111,7 +111,9 @@ function ProfilePage() {
             <div>{profile?.gearlists_count}</div>
               <div>gear lists</div>
             </Col>
+          </Row>
 
+          <Row className="justify-content-center no-gutters">
             <Col xs={3} className="my-2">
               <div>{profile?.followers_count}</div>
               <div>followers</div>
@@ -121,8 +123,8 @@ function ProfilePage() {
               <div>{profile?.following_count}</div>
               <div>following</div>
             </Col>
-
           </Row>
+          
         </Col>
         <Col lg={3} className="text-lg-right">
           {currentUser &&
