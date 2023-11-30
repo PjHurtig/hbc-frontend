@@ -25,7 +25,9 @@ h5 {
 
 .Category {
   padding: 10px;
+  color: #ffffff;
   border-radius: 25px;
   text-transform: capitalize;
+  font-weight: 500;
   margin-bottom: 5px;
 }

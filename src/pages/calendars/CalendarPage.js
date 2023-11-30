@@ -67,14 +67,14 @@ const CalendarPage = () => {
   };
 
   return (
-    <div className={styles.Padding}>
+    <div className={styles.Calendar}>
       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
         style={{ 
-          height: 500 
+          height: 500, 
         }}
         eventPropGetter={getEventStyle}
         onSelectEvent={handleEventSelect}
