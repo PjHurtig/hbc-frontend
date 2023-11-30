@@ -119,7 +119,7 @@ function GearListPage() {
               hasMore={!!gearItems.next}
               next={() => fetchMoreData(gearItems, setGearItems)}
             />
-          ) : currentUser ? (
+          ) : currentUser && gearList.results[0]?.owner === currentUser.username ? (
             <div className="text-center">No items... yet, add one!</div>
           ) : (
             <div className="text-center">No items... yet</div>
