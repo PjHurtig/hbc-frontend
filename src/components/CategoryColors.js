@@ -1,6 +1,6 @@
 export const categoryColors = {
-  bike: "#f76c6c",
-  hiking: "#1eb2a6",
-  climbing: "#2a9d8f",
-  other: "#264653",
+  bike: "#DB5C45",
+  hiking: "#EACA4B",
+  climbing: "#2BA678",
+  other: "#a8a17a",
 };
