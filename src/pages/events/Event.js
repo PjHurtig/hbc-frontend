@@ -11,6 +11,8 @@ import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
 
 import ConfirmDelete from "../../components/ConfirmDelete";
 
+import { categoryColors } from "../../components/CategoryColors";
+
 
 const Event = (props) => {
   const {
@@ -38,6 +40,8 @@ const Event = (props) => {
   const openConfirmDelete = () => setShowConfirmDelete(true);
   const closeConfirmDelete = () => setShowConfirmDelete(false);
 
+  const categoryColor = categoryColors[category] || categoryColors.other;
+
   const handleEdit = () => {
     history.push(`/events/${id}/edit`);
   };
@@ -62,11 +66,15 @@ const Event = (props) => {
     />
     <Card className={styles.Post}>
       <Card.Body>
+        <div className={styles.Category} style={{ backgroundColor: categoryColor }}>
+        {category} Event
+        </div>
         <Media className="align-items-center justify-content-between">
           <Link to={`/profiles/${profile_id}`}>
             <Avatar src={profile_image} height={55} />
             {owner}
           </Link>
+          {title && <Card.Title className="text-center">{title}</Card.Title>}
           <div className="d-flex align-items-center">
             <span>{updated_at}</span>
             {is_owner && eventPage && (
@@ -82,16 +90,12 @@ const Event = (props) => {
         <Card.Img src={image} alt={title} />
       </Link>
       <Card.Body>
-      {title && <Card.Title className="text-center">{title} - {category}</Card.Title>}
         {description && <Card.Text>{description}</Card.Text>}
         <div className={styles.PostBar}>
         <Link to={`/events/${id}`}>
               <i className="far fa-calendar" />
             </Link>
           <span>{start_time}</span>
-          <Link to={`/events/${id}`}>
-            <i className="far fa-comments" />
-          </Link>
         </div>
       </Card.Body>
     </Card>

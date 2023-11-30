@@ -100,6 +100,7 @@ const Post = (props) => {
               <Avatar src={profile_image} height={55} />
               {owner}
             </Link>
+            {title && <Card.Title className="text-center">{title}</Card.Title>}
             <div className="d-flex align-items-center">
               <span>{updated_at}</span>
               {is_owner && postPage && (
@@ -115,7 +116,6 @@ const Post = (props) => {
           <Card.Img src={image} alt={title} />
         </Link>
         <Card.Body>
-          {title && <Card.Title className="text-center">{title}</Card.Title>}
           {content && <Card.Text>{content}</Card.Text>}
           <div className={styles.PostBar}>
             {is_owner ? (

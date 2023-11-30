@@ -11,13 +11,14 @@ import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
 
 import ConfirmDelete from "../../components/ConfirmDelete";
 
+import { categoryColors } from "../../components/CategoryColors";
+
 const GearList = (props) => {
   const {
     id,
     owner,
     profile_id,
     profile_image,
-    gearitems_count,
     title,
     description,
     image,
@@ -36,6 +37,8 @@ const GearList = (props) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const openConfirmDelete = () => setShowConfirmDelete(true);
   const closeConfirmDelete = () => setShowConfirmDelete(false);
+
+  const categoryColor = categoryColors[category] || categoryColors.other;
 
   const handleEdit = () => {
     history.push(`/gearlists/${id}/edit`);
@@ -61,11 +64,15 @@ const GearList = (props) => {
       />
       <Card className={styles.Post}>
         <Card.Body>
+          <div className={styles.Category} style={{ backgroundColor: categoryColor }}>
+          {category} Gear List
+          </div>
           <Media className="align-items-center justify-content-between">
             <Link to={`/profiles/${profile_id}`}>
               <Avatar src={profile_image} height={55} />
               {owner}
             </Link>
+            {title && <Card.Title className="text-center">{title}</Card.Title>}
             <div className="d-flex align-items-center">
               <span>{updated_at}</span>
               {is_owner && gearListPage && (
@@ -81,15 +88,8 @@ const GearList = (props) => {
           <Card.Img src={image} alt={title} />
         </Link>
         <Card.Body>
-        {title && <Card.Title className="text-center">{title} - {category}</Card.Title>}
           {description && <Card.Text>{description}</Card.Text>}
-          <div className={styles.PostBar}>
-            
-            <Link to={`/gearlists/${id}`}>
-              <i className="far fa-comments" />
-            </Link>
-            {gearitems_count}
-          </div>
+
         </Card.Body>
       </Card>
     </>

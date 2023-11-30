@@ -8,19 +8,14 @@ import styles from '../../styles/Calendar.module.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
+import { categoryColors } from "../../components/CategoryColors";
+
 
 const localizer = momentLocalizer(moment)
 
 const CalendarPage = () => {
   const [events, setEvents] = useState([]);
   const history = useHistory();
-
-  const categoryColors = {
-    bike: "blue",
-    hiking: "green",
-    climbing: "red",
-    other: "grey",
-  };
 
   const handleEventSelect = (event) => {
     history.push(`/events/${event.id}`);

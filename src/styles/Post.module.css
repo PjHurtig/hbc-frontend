@@ -22,3 +22,10 @@ h5 {
 .HeartOutline:hover {
   color: #f85032;
 }
+
+.Category {
+  padding: 10px;
+  border-radius: 25px;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+}
