@@ -72,7 +72,9 @@ const GearList = (props) => {
               <Avatar src={profile_image} height={55} />
               {owner}
             </Link>
-            {title && <Card.Title className="text-center">{title}</Card.Title>}
+            <Link to={`/gearlists/${id}`}>
+              {title && <Card.Title className="text-center">{title}</Card.Title>}
+            </Link>
             <div className="d-flex align-items-center">
               <span>{updated_at}</span>
               {is_owner && gearListPage && (

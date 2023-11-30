@@ -187,15 +187,20 @@ function ProfilePage() {
 
     {activeButton === 'posts' && (
       <>
-      {profilePosts.results.length ? (
-      <InfiniteScroll
-        children={profilePosts.results.map((post) => (
-          <Post key={post.id} {...post} setPosts={setProfilePosts} />
-        ))}
-        dataLength={profilePosts.results.length}
-        loader={<Asset spinner />}
-        hasMore={!!profilePosts.next}
-        next={() => fetchMoreData(profilePosts, setProfilePosts)}
+        <div className="text-center">
+          {is_owner 
+            ? "Click on a post to add comments and edit or delete" 
+            : "Click on a post to see or add comments"}
+        </div>
+        {profilePosts.results.length ? (
+        <InfiniteScroll
+          children={profilePosts.results.map((post) => (
+            <Post key={post.id} {...post} setPosts={setProfilePosts} />
+          ))}
+          dataLength={profilePosts.results.length}
+          loader={<Asset spinner />}
+          hasMore={!!profilePosts.next}
+          next={() => fetchMoreData(profilePosts, setProfilePosts)}
       />
     ) : (
       <Asset
@@ -207,6 +212,11 @@ function ProfilePage() {
     )}
     {activeButton === 'events' && (
 <>
+<div className="text-center">
+      {is_owner 
+        ? "Click on an event to see datails and edit or delete" 
+        : "Click on an event list to see datails"}
+    </div>
   {profileEvents.results.length ? (
     <InfiniteScroll
       children={profileEvents.results.map((event) => (
@@ -228,6 +238,11 @@ function ProfilePage() {
 
     {activeButton === 'gearlists' && (
      <>
+     <div className="text-center">
+      {is_owner 
+        ? "Click on a gear list to add gear items and edit or delete" 
+        : "Click on a gear list to see gear items"}
+    </div>
      {profileGearLists.results.length ? (
        <InfiniteScroll
          children={profileGearLists.results.map((gearList) => (
