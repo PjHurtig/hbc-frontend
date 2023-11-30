@@ -18,6 +18,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "../profiles/PopularProfiles";
 
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
 function EventsPage({ message, filter = "" }) {
   const [events, setEvents] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -25,14 +27,23 @@ function EventsPage({ message, filter = "" }) {
 
   const [query, setQuery] = useState("");
 
+  const currentUser = useCurrentUser();
+
+  const filterPastEvents = (eventsArray) => {
+    const currentTime = new Date();
+    return eventsArray.filter(event => new Date(event.start_time) > currentTime);
+  };
+
+
   useEffect(() => {
     let isMounted = true;
 
-    const fetchGearLists = async () => {
+    const fetchEvents = async () => {
       try {
         const { data } = await axiosReq.get(`/events/?${filter}search=${query}`);
         if (isMounted) {
-          setEvents(data);
+          const upcomingEvents = filterPastEvents(data.results);
+          setEvents({ ...data, results: upcomingEvents });
           setHasLoaded(true);
         }
       } catch (err) {
@@ -42,14 +53,15 @@ function EventsPage({ message, filter = "" }) {
 
     setHasLoaded(false);
     const timer = setTimeout(() => {
-      fetchGearLists();
+      fetchEvents();
     }, 1000);
 
     return () => {
       clearTimeout(timer);
       isMounted = false;
     };
-  }, [filter, query, pathname]);
+  }, [filter, query, pathname, currentUser]);
+
 
   return (
     <Row className="h-100">
