@@ -4,7 +4,7 @@ Developer: Jonatan Hurtig
 
 ![Mockup image](https://i.imgur.com/pVaGUw9.png)
 
-[View live website](https://project-frontend-pj-2fd2a1043672.herokuapp.com/)
+[View live website](https://hbc-frontend-pj-5db59e2e946b.herokuapp.com/)
 
 ## Table of Contents
 
