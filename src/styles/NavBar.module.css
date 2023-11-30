@@ -27,7 +27,7 @@ a:hover {
   }
   
 
-  @media (max-width: 768px) {
+  @media (max-width: 372px) {
 
     /* further down on smaller screens when icons changes the height of navbar */
     .SuccessMessage {
