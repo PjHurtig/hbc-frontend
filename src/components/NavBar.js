@@ -35,6 +35,7 @@ const NavBar = () => {
       <Dropdown>
         <Dropdown.Toggle variant="none" id="dropdown-basic">
         <i className="far fa-plus-square"></i>
+        Add
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
