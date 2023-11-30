@@ -16,19 +16,27 @@ const HomePage = () => {
 
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchPosts = async () => {
       const response = await axios.get('/posts');
-      setPosts(response.data);
+      if (isMounted) {
+        setPosts(response.data);
+      }
     };
 
     const fetchEvents = async () => {
       const response = await axios.get('/events?ordering=start_time');
-      setEvents(response.data);
+      if (isMounted) {
+        setEvents(response.data);
+      }
     };
 
     const fetchGearlists = async () => {
       const response = await axios.get('/gearlists');
+      if (isMounted) {
       setGearlists(response.data);
+      }
     };
 
     if (activeCategory === 'posts') {
@@ -38,6 +46,10 @@ const HomePage = () => {
     } else if (activeCategory === 'gearlists') {
       fetchGearlists();
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [activeCategory]);
 
   return (
