@@ -17,8 +17,6 @@ import {
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
-import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
-
 const UsernameForm = () => {
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
@@ -28,8 +26,6 @@ const UsernameForm = () => {
 
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
-
-  const { triggerSuccessMessage } = useSuccessMessage();
 
   useEffect(() => {
     if (currentUser?.profile_id?.toString() === id) {
@@ -49,10 +45,9 @@ const UsernameForm = () => {
         ...prevUser,
         username,
       }));
-      triggerSuccessMessage('Username successfully updated!');
       history.goBack();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setErrors(err.response?.data);
     }
   };
