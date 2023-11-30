@@ -5,6 +5,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import appStyles from "../../App.module.css";
+import styles from "../../styles/GearListPage.module.css"
 import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import GearList from "./GearList";
@@ -70,9 +71,14 @@ function GearListPage() {
         <Container className={appStyles.Content}>
         {currentUser && gearList.results[0]?.owner === currentUser.username ? (
           <>
-          <Button variant="primary" onClick={handleShow}>
-            Add Gear
-          </Button>
+          <div className={styles.AddButton}>
+            <Button 
+              variant="info"
+              onClick={handleShow}
+            >
+             <i className="far fa-plus-square"></i> Add Gear
+            </Button>
+          </div>
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -96,7 +102,7 @@ function GearListPage() {
 
           </>
           ) : gearItems.results.length ? (
-            "Gear Items"
+            <h3 className={styles.H3}>Gear Items</h3>
           ) : null}
           {gearItems.results.length ? (
             <InfiniteScroll
@@ -114,9 +120,9 @@ function GearListPage() {
               next={() => fetchMoreData(gearItems, setGearItems)}
             />
           ) : currentUser ? (
-            <span>No items... yet, add one!</span>
+            <div className="text-center">No items... yet, add one!</div>
           ) : (
-            <span>No items... yet</span>
+            <div className="text-center">No items... yet</div>
           )}
         </Container>
       </Col>

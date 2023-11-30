@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion, Card, Col, Row } from "react-bootstrap";
 
 import { MoreDropdown } from "../../components/MoreDropdown";
 import GearItemEditForm from "./GearItemEditForm";
@@ -11,6 +11,7 @@ import { axiosRes } from "../../api/axiosDefaults";
 import { useSuccessMessage } from "../../contexts/SuccessMessageContext";
 
 import ConfirmDelete from "../../components/ConfirmDelete";
+import SmallImage from "../../components/SmallImage";
 
 const GearItem = (props) => {
   const {
@@ -73,9 +74,10 @@ const GearItem = (props) => {
             eventKey="0"
             className={styles.Header}
             >
-          <i className="fa-solid fa-chevron-down"></i>
+          <span className={styles.Date}><SmallImage src={image} height={55} /></span>
           <span className={styles.Name}>{name}</span>
-          <span className={styles.Date}>{updated_at}</span>
+          <i className="fa-solid fa-chevron-down"></i>
+          
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <Card.Body className={styles.Body}>
@@ -92,25 +94,32 @@ const GearItem = (props) => {
                     image={image}
                   />
                 ) : (
-                  <>
-                    <Card.Text>
-                      {about}
-                    </Card.Text>
-                    
-                    <Card.Img 
-                    variant="top" 
-                    src={image} 
-                    className={styles.Img}
-                    />
-                  </>
+                  <Row>
+                    <Col>
+                      <Card.Img 
+                      variant="top" 
+                      src={image} 
+                      className={styles.Img}
+                      />
+                    </Col>
+                    <Col>
+                      <Card.Text>
+                        {about}
+                      </Card.Text>
+                    </Col>
+                  </Row>
                 )}
               
-
               {is_owner && !showEditForm && (
+                <>
+                <div className={styles.EditDiv}>
+                  <div>Updated {updated_at}</div>
                 <MoreDropdown
                   handleEdit={() => setShowEditForm(true)}
                   handleDelete={openConfirmDelete}
                 />
+                </div>
+                </>
               )}
 
             </Card.Body>
