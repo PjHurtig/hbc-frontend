@@ -1,3 +1,5 @@
+// category colors to be used in gearlists, events and calendar
+
 export const categoryColors = {
   bike: "#DB5C45",
   hiking: "#D98B3F",

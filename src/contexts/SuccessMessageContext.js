@@ -1,3 +1,5 @@
+// adds successmessage context to the whole app to render regardless of url
+
 import React, { useState, createContext, useContext } from 'react';
 
 const SuccessMessageContext = createContext();

@@ -7,7 +7,7 @@ import PostsPage from '../posts/PostsPage';
 
 import GearListsPage from '../gearlists/GearListsPage';
 
-
+// the home page with buttons to change between posts, events and gearlists
 const HomePage = () => {
   const [activeCategory, setActiveCategory] = useState('posts');
   const [posts, setPosts] = useState([]);

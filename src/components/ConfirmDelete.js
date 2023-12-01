@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
+// confirm delete modal for all deletion functionality
 const ConfirmDelete = ({ show, handleClose, handleDelete, itemName }) => {
   return (
     <Modal show={show} onHide={handleClose}>
