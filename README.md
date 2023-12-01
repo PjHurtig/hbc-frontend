@@ -158,10 +158,19 @@ Key functionality Goals
 
 
 ## Wireframes
-Initial wireframe for mobile with [Balsamiq](https://balsamiq)
+Initial wireframes with [Balsamiq](https://balsamiq)
+
+Gearlist mobile view:
 
 ![Mobile Wireframe](https://i.imgur.com/QEvkU4w.png)
 
+Calendar desktop view:
+
+![desktop Wireframe](https://i.imgur.com/jy3W0tt.png)
+
+Add event desktop view:
+
+![desktop Wireframe](https://i.imgur.com/pkwwV4k.png)
 
 ## Technologies Used
 
