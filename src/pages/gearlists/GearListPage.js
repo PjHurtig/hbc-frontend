@@ -19,6 +19,8 @@ import Asset from "../../components/Asset";
 import { fetchMoreData } from "../../utils/utils";
 import { Button, Modal } from "react-bootstrap";
 
+import PopularProfiles from "../profiles/PopularProfiles";
+
 function GearListPage() {
   const { id } = useParams();
   const [gearList, setGearList] = useState({ results: [] });
@@ -66,7 +68,7 @@ function GearListPage() {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <p>Popular profiles for mobile</p>
+        <PopularProfiles mobile/>
         <GearList {...gearList.results[0]} setGearLists={setGearList} gearListPage />
         <Container className={appStyles.Content}>
         {currentUser && gearList.results[0]?.owner === currentUser.username ? (
@@ -127,7 +129,7 @@ function GearListPage() {
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        Popular profiles for desktop
+      <PopularProfiles />
       </Col>
     </Row>
   );
