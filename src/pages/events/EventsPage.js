@@ -29,12 +29,6 @@ function EventsPage({ message, filter = "" }) {
 
   const currentUser = useCurrentUser();
 
-  const filterPastEvents = (eventsArray) => {
-    const currentTime = new Date();
-    return eventsArray.filter(event => new Date(event.start_time) > currentTime);
-  };
-
-
   useEffect(() => {
     let isMounted = true;
 
@@ -42,8 +36,7 @@ function EventsPage({ message, filter = "" }) {
       try {
         const { data } = await axiosReq.get(`/events/?${filter}search=${query}`);
         if (isMounted) {
-          const upcomingEvents = filterPastEvents(data.results);
-          setEvents({ ...data, results: upcomingEvents });
+          setEvents(data);
           setHasLoaded(true);
         }
       } catch (err) {
