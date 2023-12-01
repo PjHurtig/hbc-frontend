@@ -49,7 +49,7 @@ function EventEditForm() {
           }
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
 
@@ -95,7 +95,7 @@ function EventEditForm() {
       triggerSuccessMessage('Event successfully updated!');
       history.push(`/events/${id}`);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }

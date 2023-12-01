@@ -52,7 +52,7 @@ const Event = (props) => {
       triggerSuccessMessage('Event successfully deleted!');
       history.goBack();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

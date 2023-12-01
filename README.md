@@ -519,6 +519,10 @@ Deployment to Heroku was completed using the following steps:
 
 - The switch color by category for events on calendar page information is from [stackoverflow](https://stackoverflow.com/questions/50057749/switch-color-statement)
 
+- the initial code for UseEffect cleanup: [medium.com](https://medium.com/berlin-tech-blog/how-to-get-rid-of-cant-perform-a-react-state-update-on-an-unmounted-component-or-why-it-is-cd5e8132d6c6)
+
+
+
 
 
 ## Thank You

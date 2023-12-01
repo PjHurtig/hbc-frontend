@@ -39,7 +39,7 @@ function CommentEditForm(props) {
       triggerSuccessMessage('Comment successfully updated!');
       setShowEditForm(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

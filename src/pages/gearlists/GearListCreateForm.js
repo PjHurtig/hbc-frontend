@@ -76,7 +76,7 @@ function GearListCreateForm() {
       triggerSuccessMessage('Gear list successfully created!');
       history.push(`/gearlists/${data.id}`);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       if (err.response?.status !== 401) {
         setErrors(err.response?.data);
       }

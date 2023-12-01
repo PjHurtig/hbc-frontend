@@ -54,7 +54,7 @@ function GearListPage() {
           }
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     };
   

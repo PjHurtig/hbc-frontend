@@ -42,7 +42,7 @@ function CommentCreateForm(props) {
       triggerSuccessMessage('Comment successfully created!');
       setContent("");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
