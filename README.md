@@ -2,7 +2,7 @@
 
 Developer: Jonatan Hurtig
 
-![Mockup image](https://i.imgur.com/pVaGUw9.png)
+![Mockup image](https://i.imgur.com/m7jyWnM.png)
 
 [View live website](https://hbc-frontend-pj-5db59e2e946b.herokuapp.com/)
 
@@ -72,13 +72,11 @@ Developer: Jonatan Hurtig
 
  - HikeBikeClimb is a site for users that likes to hike, ride bikes, and/or climb. The site gives the user tools to create and view events in these categories of sport, and to collect their specific gear in gear lists that they can update as they update their gear, to keep track of and inspire other users that are interested in different gear set ups. A user can also add posts to update the other users on the site about their journey and milestones in these sports.
 
-
-
 ---
 
 ## Project Goals
 
- - The goal for this project was to create a place for enthusiasts of these three sports to come togehter and share information, inspiration and meet up at events big and small.
+ - The goal for this project was to create a place for enthusiasts of these three sports to come together and share information, inspiration and meet up at events big and small.
 
 Key functionality Goals
  - comprehensive navigation
@@ -98,7 +96,7 @@ Key functionality Goals
 
 ### Target Audience
 
- - The target audience for HikeBikeClimb is people that likes to hike, ride bikes, and/or climb and want tools to extend these interests in to a network of likeminded, .
+ - The target audience for HikeBikeClimb is people that likes to hike, ride bikes, and/or climb and want tools to extend these interests in to a network of likeminded.
 
 ### User Requirements and Expectations
 
@@ -184,7 +182,7 @@ Initial wireframe for mobile with [Balsamiq](https://balsamiq)
 - [React Infinite Scroll](https://www.npmjs.com/package/react-infinite-scroll-component) - Justification: I used this component to load content (posts/comments) automatically as the user scrolls towards the bottom of the page without having to jump to next/previous page.
 - [React Router](https://v5.reactrouter.com/web/guides/quick-start) - used for dynamic routing. Justification: I used this library to enable the navigation among views of various components and control what the user sees depending on the URL they have accessed in the browser.
 - [ES7 Snippets](https://open-vsx.org/extension/dsznajder/es7-react-js-snippets): this was used for keyboard shortcuts when creating jsx functions
-- [FullCalendar](https://fullcalendar.io/): was used to display the events per date in the calendar page
+- [BigCalendar](https://jquense.github.io/react-big-calendar/examples/?path=/story/about-big-calendar--page): was used to display the events per date in the calendar page
 
 ### Tools & Programs
 
@@ -208,7 +206,7 @@ Initial wireframe for mobile with [Balsamiq](https://balsamiq)
 
 The project was planned and implemented following agile methodology principles. GitHub Projects was used to manage and document this process.
 
-The GitHub project can be viewed here: [Project](https://github.com/users/PjHurtig/projects/7)
+The GitHub project can be viewed here: [Project](https://github.com/users/PjHurtig/projects/8)
 
 Following MoSCoW Priortisation principles, each User Story was assigned a tag from one of the following:
 
@@ -271,6 +269,14 @@ There were various components created and reused across this application.
   - This component is reusable as it will display different icons based on a users logged in status.
   - If no user is logged in a log in, sign up and contact icon will be available however if a user is currently logged in, the full range of icons will be available apart from log in.
 
+- `<ConfirmDelete />` - resuable component, used for a modal to confirm deletion of a users content.
+
+- `<CategoryColors />` - resuable component, used for defining the colors of event and gearlist categories.
+
+- `<SmallImage />` - resuable component, used for a small preview of gear items in the accordion list.
+
+- `<SuccessAlert />` - resuable component, used for displaying informational alerts to the user when performing actions.
+
 
 
 There were various pages created and used in this application
@@ -299,7 +305,7 @@ There were various pages created and used in this application
 
 #### Django REST Framework
 
-The API for this Front-End application was built with the Django REST Framework. The repository with a README file for the DRF Back-End can be found [here](https://github.com/PjHurtig/project-api).
+The API for this Front-End application was built with the Django REST Framework. The repository with a README file for the DRF Back-End can be found [here](https://github.com/PjHurtig/hbcapi).
 
 ##### Back to [top](#table-of-contents)
 
@@ -310,24 +316,24 @@ The API for this Front-End application was built with the Django REST Framework.
 #### Navigation(Navbar)
 NavBar Logged in
 
-![NavBar Logged in](https://i.imgur.com/t2Hay48.png)
+![NavBar Logged in](https://i.imgur.com/OuNrVCc.png)
 
 NavBar Logged out
 
-![NavBar Logged out](https://i.imgur.com/ivJ3HGk.png)
+![NavBar Logged out](https://i.imgur.com/1oRKYET.png)
 
 NavBar Mobile
 
-![NavBar Mobile](https://i.imgur.com/4fydi5g.png)
+![NavBar Mobile](https://i.imgur.com/9S06LqB.png)
 
 NavBar Mobile Expanded
 
-![NavBar Mobile Expanded](https://i.imgur.com/oxLLsGI.png)
+![NavBar Mobile Expanded](https://i.imgur.com/1nfW5iX.png)
 
 
 - Navbar consists of Logo image and is displayed in all pages for easy navigation of website
 - Logo and webbsite name both are links for home page
-- Navbar consists of a links to a signin page, signup page and the calendar for logged out users
+- Navbar consists of a links to home, signin page, signup page and the calendar for logged out users
 - Authenticated/Signed in user can see additional icons as follows:
   - Add gear/post/event: It opens the create form page for each
   - Logout: This is used for user to logout
@@ -340,27 +346,27 @@ NavBar Mobile Expanded
 - This page consists of sign up form for user to create new account
 - New users can access this page by clicked on Sign Up link on Navbar
 
-![Signup Page](https://i.imgur.com/gqJS3jd.png)
+![Signup Page](https://i.imgur.com/GUydwDp.png)
 
 #### Sign In Page
 
 - This page consists of sign in form for existing user to signin using their credentials
 - Users can access this page by clicking on Sign In link on Navbar
 
-![Signin Page](https://i.imgur.com/HV4cfR4.png)
+![Signin Page](https://i.imgur.com/DDORPjP.png)
 
 #### HomePage
 
-- Displays all user posts sorted by newly created
-
+- Displays all user posts / events / gearlists sorted by newly created
+![Home Page](https://i.imgur.com/DGklIoO.png)
 
 #### Profile Page
 
 - This page consists the detail of user including their bio, number of posts/events/gear lists that the user has created
 - Logged in user can access this page by clicking on their avatar image in Navbar
 
-![Profile Desktop](https://i.imgur.com/59pm1GD.png)
-![Profile Mobile](https://i.imgur.com/6S5a0vx.png)
+![Profile Desktop](https://i.imgur.com/sNTxA2h.png)
+![Profile Mobile](https://i.imgur.com/bbLNBoY.png)
 
 
 
@@ -400,16 +406,15 @@ In the future I want to add a google maps API for a location field on the events
 
 Home
 
-![Home Lighthouse](https://i.imgur.com/Z203Eic.png)
-
+![Home Lighthouse](https://i.imgur.com/UzhCatk.png)
 
 Profile
 
-![rofile Desktop](https://i.imgur.com/bD1Odj6.png)
+![profile Desktop](https://i.imgur.com/zcilwN2.png)
 
 Calendar
 
-![rofile Desktop](https://i.imgur.com/9u9Auzm.png)
+![calendar Desktop](https://i.imgur.com/4pzMCWA.png)
 
 
 ### ESLint Validation
@@ -421,6 +426,10 @@ Calendar
 
 
 ## Testing
+
+A separate document for the manual testing can be found in the repository:
+[TESTING.md](https://github.com/PjHurtig/hbc-frontend/blob/main/TESTING.md)
+
 
 The site has been successfully tested on these devices available to me:
 
@@ -442,13 +451,14 @@ lenovo ideapad
 
 - Chrome
 - Firefox
+- Edge
 
 
 ### Browser Testing
 
 - Chrome
 - Firefox
-
+- Edge
  
 ## Deployment
 
@@ -500,7 +510,6 @@ Deployment to Heroku was completed using the following steps:
 
 - The switch color by category for events on calendar page information is from [stackoverflow](https://stackoverflow.com/questions/50057749/switch-color-statement)
 
-- The fullcalendar changeview is from [Fullcalendar docs](https://fullcalendar.io/docs/Calendar-changeView)
 
 
 ## Thank You
